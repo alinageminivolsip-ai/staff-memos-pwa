@@ -1,4 +1,4 @@
-const CACHE_NAME = 'staff-memos-v2';
+const CACHE_NAME = 'staff-memos-v3';
 
 const FILES_TO_CACHE = [
   './',
