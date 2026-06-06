@@ -1357,13 +1357,17 @@ if(loaderText){
     LOADING_TEXTS[Math.floor(Math.random() * LOADING_TEXTS.length)];
 }
 
+function hideLoader(){
+  const loader=document.getElementById("loader");
+  if(loader){
+    loader.classList.add("hide");
+  }
+}
+
+setTimeout(hideLoader, 1400);
+
 window.addEventListener("load",()=>{
-  setTimeout(()=>{
-    const loader=document.getElementById("loader");
-    if(loader){
-      loader.classList.add("hide");
-    }
-  },1200);
+  setTimeout(hideLoader, 300);
 });
     render();
   });
