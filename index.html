@@ -48,16 +48,35 @@
 }
     .tag{display:inline-flex;width:max-content;background:#FFF5BF;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;margin-bottom:8px}
 .serviceMeta{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+  margin:18px 0;
+  display:flex;
+  flex-direction:column;
   gap:10px;
-  margin:14px 0;
 }
-.serviceMeta > div{
-  background:#F9F8F4;
-  border:1px solid #E9E5DC;
-  border-radius:14px;
-  padding:12px;
+.metaRow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:15px;
+  color:#504D4A;
+}
+.metaIcon{
+  width:32px;
+  height:32px;
+  flex-shrink:0;
+  border-radius:10px;
+  background:#FFF5BF;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+}
+.metaText{
+  font-weight:700;
+}
+.metaText span{
+  color:#8A847D;
+  font-weight:500;
 }
 .metaLabel{display:block;font-size:11px;color:#8A847D;margin-bottom:3px;}
 .metaValue{display:block;font-size:13px;font-weight:800;color:#504D4A;}
@@ -127,26 +146,29 @@ function memoCard(m){
       </div>
       <h2>${m.title}</h2>
       <div class="serviceMeta">
-        <div>
-          <span class="metaLabel">Длительность</span>
-          <span class="metaValue">${m.duration}</span>
-        </div>
-        <div>
-          <span class="metaLabel">Кратность</span>
-          <span class="metaValue">${m.frequency}</span>
-        </div>
-
-        <div>
-          <span class="metaLabel">Инвентарь</span>
-          <span class="metaValue">${m.inventory}</span>
-        </div>
-      </div>
+  <div class="metaRow">
+    <div class="metaIcon">🕒</div>
+    <div class="metaText">
+      <span>Длительность:</span> ${m.duration}
     </div>
+  </div>
+  <div class="metaRow">
+    <div class="metaIcon">📅</div>
+    <div class="metaText">
+      <span>Кратность:</span> ${m.frequency}
+    </div>
+  </div>
+  <div class="metaRow">
+    <div class="metaIcon">🧺</div>
+    <div class="metaText">
+      <span>Инвентарь:</span> ${m.inventory}
+    </div>
+  </div>
+</div>
     <div class="actions">
       <button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button>
       <button class="copyBtn" data-copy="${m.id}">Копия</button>
     </div>
-
     <div class="details">${details}</div>
   </article>`;
 }
