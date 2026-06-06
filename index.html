@@ -1449,7 +1449,14 @@ bindCards();
 }
 document.getElementById("search").addEventListener("input",e=>{
   state.search=e.target.value;
-  const LOADING_TEXTS = [
+  render();
+});
+
+document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
+  state.page=btn.dataset.page;
+  renderPages();
+}); let deferredPrompt;
+  const installBtn=document.getElementById("installBtn");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display="block"});installBtn.addEventListener("click",async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt=null;installBtn.style.display="none"});const LOADING_TEXTS = [
   "История заботы начинается...",
   "Каждое посещение важно",
   "Маленькая помощь имеет большое значение",
@@ -1474,19 +1481,13 @@ function hideLoader(){
   }
 }
 
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
+}
+
+render();
+
 setTimeout(hideLoader,1400);
-
-window.addEventListener("load",()=>{
-  setTimeout(hideLoader,300);
-});
-  render();
-});
-
-document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
-  state.page=btn.dataset.page;
-  renderPages();
-}); let deferredPrompt;
-  const installBtn=document.getElementById("installBtn");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display="block"});installBtn.addEventListener("click",async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt=null;installBtn.style.display="none"});if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"))}render();
 </script>
 </body>
 </html>
