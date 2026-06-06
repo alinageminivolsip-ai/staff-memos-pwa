@@ -817,7 +817,6 @@
   width:0%;
   background:#FFCD00;
   border-radius:999px;
-  animation:loaderFill 1.2s ease forwards;
 }
 
 @keyframes pulse{
@@ -1460,8 +1459,31 @@ document.getElementById("search").addEventListener("input",e=>{
 document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
   state.page=btn.dataset.page;
   renderPages();
-}); let deferredPrompt;
-  const installBtn=document.getElementById("installBtn");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display="block"});installBtn.addEventListener("click",async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt=null;installBtn.style.display="none"});const LOADING_TEXTS = [
+});
+
+let deferredPrompt;
+const installBtn=document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt",e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  installBtn.style.display="block";
+});
+
+installBtn.addEventListener("click",async()=>{
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt=null;
+  installBtn.style.display="none";
+});
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./sw.js");
+  });
+}
+
+const LOADING_TEXTS=[
   "История заботы начинается...",
   "Каждое посещение важно",
   "Маленькая помощь имеет большое значение",
@@ -1474,10 +1496,10 @@ document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
 
 const loaderText=document.getElementById("loaderText");
 const loaderPercent=document.getElementById("loaderPercent");
+const loaderFill=document.querySelector(".loaderBarFill");
 
 if(loaderText){
-  loaderText.textContent =
-    LOADING_TEXTS[Math.floor(Math.random() * LOADING_TEXTS.length)];
+  loaderText.textContent=LOADING_TEXTS[Math.floor(Math.random()*LOADING_TEXTS.length)];
 }
 
 function hideLoader(){
@@ -1487,23 +1509,31 @@ function hideLoader(){
   }
 }
 
-let percent=0;
+function startLoader(){
+  let percent=0;
 
-const loadingTimer=setInterval(()=>{
-  if(percent < 99){
-    percent += Math.floor(Math.random() * 7) + 2;
-    if(percent > 99) percent = 99;
-    if(loaderPercent) loaderPercent.textContent = percent + "%";
-  }else{
-    clearInterval(loadingTimer);
+  const loadingTimer=setInterval(()=>{
+    if(percent<99){
+      percent+=Math.floor(Math.random()*6)+2;
+      if(percent>99) percent=99;
 
-    setTimeout(()=>{
-      percent = 100;
-      if(loaderPercent) loaderPercent.textContent = "100%";
-      setTimeout(hideLoader,450);
-    },650);
-  }
-},120);
-</script>
+      if(loaderPercent) loaderPercent.textContent=percent+"%";
+      if(loaderFill) loaderFill.style.width=percent+"%";
+    }else{
+      clearInterval(loadingTimer);
+
+      setTimeout(()=>{
+        percent=100;
+        if(loaderPercent) loaderPercent.textContent="100%";
+        if(loaderFill) loaderFill.style.width="100%";
+
+        setTimeout(hideLoader,500);
+      },700);
+    }
+  },130);
+}
+
+render();
+startLoader();
 </body>
 </html>
