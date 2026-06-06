@@ -341,6 +341,34 @@
   border-color:#FFCD00;
   color:#504D4A;
 }
+    .installSteps{
+  display:grid;
+  gap:12px;
+  margin-top:14px;
+}
+.installStep{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#fff;
+  border:1px solid #E9E5DC;
+  border-radius:14px;
+  padding:12px;
+}
+.installStep img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+  flex-shrink:0;
+}
+.installStepText{
+  font-size:15px;
+  line-height:1.35;
+  color:#504D4A;
+}
+.installStepText b{
+  font-weight:850;
+}
     @media (max-width:600px){
   main{
     padding:10px 12px 22px;
@@ -527,14 +555,30 @@
         <span class="ruleArrow">▶</span>
         <h3>Как установить на iPhone</h3>
       </div>
-      <div class="ruleBody">
-        <ol>
-          <li>Откройте приложение в Safari.</li>
-          <li>Нажмите кнопку «Поделиться».</li>
-          <li>Выберите «На экран Домой».</li>
-          <li>Нажмите «Добавить».</li>
-        </ol>
+     <div class="ruleBody">
+  <div class="installSteps">
+
+    <div class="installStep">
+      <div class="installStepText">
+        Откройте приложение в браузере.
       </div>
+    </div>
+    <div class="installStep">
+      <img src="./install/share.png" alt="">
+      <div class="installStepText">
+        Нажмите кнопку <b>«Поделиться»</b> внизу экрана.
+      </div>
+    </div>
+    <div class="installStep">
+      <div class="installStepText">
+        Выберите пункт <b>«На экран Домой»</b>.
+      </div>
+    </div>
+    <div class="installStep">
+      <div class="installStepText">
+        Нажмите <b>«Добавить»</b>.
+      </div>
+    </div>
     </div>
     <div class="ruleSection">
       <div class="ruleHead">
@@ -542,12 +586,26 @@
         <h3>Как установить на Android</h3>
       </div>
       <div class="ruleBody">
-        <ol>
-          <li>Откройте приложение в Chrome.</li>
-          <li>Нажмите меню ⋮.</li>
-          <li>Выберите «Добавить на главный экран».</li>
-          <li>Подтвердите установку.</li>
-        </ol>
+  <div class="installSteps">
+    <div class="installStep">
+      <div class="installStepText">
+        Откройте приложение в браузере.
+      </div>
+    </div>
+    <div class="installStep">
+      <img src="./install/dots.png" alt="">
+      <div class="installStepText">
+        Нажмите меню <b>⋮</b> в правом верхнем углу.
+      </div>
+    </div>
+    <div class="installStep">
+      <div class="installStepText">
+        Выберите <b>«Добавить на главный экран»</b> или <b>«Установить приложение»</b>.
+      </div>
+    </div>
+    <div class="installStep">
+      <div class="installStepText">
+        Подтвердите установку.
       </div>
     </div>
   </div>
