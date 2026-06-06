@@ -183,6 +183,46 @@
   object-fit:cover;
   max-height:260px;
 }
+    .heroBlock{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  margin-bottom:20px;
+}
+
+.heroImage{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  display:block;
+}
+
+.heroOverlay{
+  position:absolute;
+  inset:0;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  background:linear-gradient(
+    to top,
+    rgba(80,77,74,.75),
+    rgba(80,77,74,.15),
+    transparent
+  );
+}
+.heroOverlay h2{
+  color:white;
+  margin:12px 0;
+  font-size:36px;
+}
+.heroMeta{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  color:white;
+  font-weight:700;
+}
   </style>
 </head>
 <body>
@@ -215,7 +255,7 @@
 <li>к коммуникации</li>
 <li>к ориентации в пространстве</li>
 <li>адекватно оценивать собственные действия</li>
-</ul>
+</ul>${m.image?`
 <p>
 Выстраивайте свои действия с соблюдением максимального уровня безопасности получателя социальных услуг.
 </p>
@@ -272,7 +312,6 @@ function memoCard(m){
         </div>
         ${s.time?`<div class="stageTime">⏱ ${s.time}</div>`:""}
       </div>
-
       <div class="stageBody">
         <ul class="${important?"importantList":"checkList"}">${listItems}</ul>
       </div>
@@ -284,8 +323,18 @@ function memoCard(m){
         <div class="tag">${m.category}</div>
         <button class="fav" data-fav="${m.id}">${isFav?"★":"☆"}</button>
       </div>
-     <h2>${m.title}</h2>
-${m.image?`<img src="${m.image}" class="memoImage" alt="">`:""}
+    <div class="heroBlock">
+  <img src="${m.image}" class="heroImage" alt="">
+  <div class="heroOverlay">
+    <div class="tag">${m.category}</div>
+    <h2>${m.title}</h2>
+    <div class="heroMeta">
+      <div>🕒 ${m.duration}</div>
+      <div>📅 ${m.frequency}</div>
+      <div>🧺 ${m.inventory}</div>
+    </div>
+  </div>
+</div>
 <div class="serviceMeta">
   <div class="metaRow">
     <div class="metaIcon">🕒</div>
