@@ -547,18 +547,22 @@
 }
 .memoScroller{
   display:flex;
+  flex-direction:row;
   gap:14px;
   overflow-x:auto;
   overflow-y:hidden;
   scroll-snap-type:x mandatory;
-  padding:2px 4px 18px;
+  padding:2px 18px 18px 4px;
   scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  width:100%;
 }
 .memoScroller::-webkit-scrollbar{
   display:none;
 }
 .memoScroller .memo{
-  flex:0 0 88%;
+  flex:0 0 86%;
+  min-width:86%;
   max-width:520px;
   scroll-snap-align:start;
   margin:0;
@@ -566,14 +570,6 @@
 @media (min-width:760px){
   .memoScroller .memo{
     flex-basis:70%;
-  }
-}
-@media (hover:hover){
-  .stackGroup:hover .stackWrap:not(.open) .memo:nth-child(2){
-    transform:scale(.97) translateY(24px);
-  }
-  .stackGroup:hover .stackWrap:not(.open) .memo:nth-child(3){
-    transform:scale(.94) translateY(48px);
   }
 }
 </style>
@@ -993,19 +989,18 @@ return `<article class="memo" id="memo-${m.id}">
     }
     groups[m.category].push(m);
   });
-  el.innerHTML=Object.entries(groups).map(([category,items],groupIndex)=>{
+  el.innerHTML=Object.entries(groups).map(([category,items])=>{
     const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
     return `
-      <section class="stackGroup">
-        <div class="stackTitle">
+      <section class="categoryGroup">
+        <div class="categoryTitle">
           <h2>${category}</h2>
           <span>${countText}</span>
         </div>
-        <div class="stackWrap" data-stack="${targetId}-${groupIndex}">
+
+        <div class="memoScroller">
           ${items.map(memoCard).join("")}
         </div>
-
-        ${items.length>1 ? `<button class="stackToggle" data-stack-toggle="${targetId}-${groupIndex}">Развернуть стопку</button>` : ""}
       </section>
     `;
   }).join("");
