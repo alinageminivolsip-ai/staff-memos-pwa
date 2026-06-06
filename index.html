@@ -827,6 +827,8 @@
 }
 </style>
 </head>
+<body>
+
 <div id="loader">
   <div class="loaderHeart">❤️</div>
 
@@ -840,7 +842,6 @@
     <div class="loaderBarFill"></div>
   </div>
 </div>
-  <body>
 <div class="app">
 <header><div class="topbar"><div class="logo"><img src="./icons/icon-192.png" alt="МСП"></div><div><h1>Памятки МСП</h1><div class="subtitle">Технологические карты для сотрудников ГБУ «Мой социальный помощник»</div></div></div><div class="searchWrap"><input id="search" class="search" placeholder="Найти памятку..." /><button id="installBtn" class="installBtn">Установить</button></div></header><div class="collapseBox">
   <button class="collapseHead" type="button" data-collapse>
@@ -1335,42 +1336,15 @@ return `<article class="memo" id="memo-${m.id}">
   }).join("");
 }
 function bindCards(){
-  document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
-    const id=Number(btn.dataset.fav);
-    state.favs=state.favs.includes(id)?state.favs.filter(x=>x!==id):[...state.favs,id];
-    saveFavs();
-    const LOADING_TEXTS = [
-  "История заботы начинается...",
-  "Каждое посещение важно",
-  "Маленькая помощь имеет большое значение",
-  "Забота начинается с внимания",
-  "Спасибо за ежедневную поддержку людей",
-  "Добрые дела складываются в большие результаты",
-  "Тепло начинается с простого участия",
-  "Каждый визит делает жизнь комфортнее"
-];
+ document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
+  const id=Number(btn.dataset.fav);
+  state.favs=state.favs.includes(id)
+    ? state.favs.filter(x=>x!==id)
+    : [...state.favs,id];
 
-const loaderText=document.getElementById("loaderText");
-
-if(loaderText){
-  loaderText.textContent =
-    LOADING_TEXTS[Math.floor(Math.random() * LOADING_TEXTS.length)];
-}
-
-function hideLoader(){
-  const loader=document.getElementById("loader");
-  if(loader){
-    loader.classList.add("hide");
-  }
-}
-
-setTimeout(hideLoader, 1400);
-
-window.addEventListener("load",()=>{
-  setTimeout(hideLoader, 300);
+  saveFavs();
+  render();
 });
-    render();
-  });
 document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
   const id=Number(btn.dataset.open);
   const card=btn.closest(".memo");
@@ -1475,6 +1449,36 @@ bindCards();
 }
 document.getElementById("search").addEventListener("input",e=>{
   state.search=e.target.value;
+  const LOADING_TEXTS = [
+  "История заботы начинается...",
+  "Каждое посещение важно",
+  "Маленькая помощь имеет большое значение",
+  "Забота начинается с внимания",
+  "Спасибо за ежедневную поддержку людей",
+  "Добрые дела складываются в большие результаты",
+  "Тепло начинается с простого участия",
+  "Каждый визит делает жизнь комфортнее"
+];
+
+const loaderText=document.getElementById("loaderText");
+
+if(loaderText){
+  loaderText.textContent =
+    LOADING_TEXTS[Math.floor(Math.random() * LOADING_TEXTS.length)];
+}
+
+function hideLoader(){
+  const loader=document.getElementById("loader");
+  if(loader){
+    loader.classList.add("hide");
+  }
+}
+
+setTimeout(hideLoader,1400);
+
+window.addEventListener("load",()=>{
+  setTimeout(hideLoader,300);
+});
   render();
 });
 
