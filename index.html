@@ -11,21 +11,54 @@
   <link rel="apple-touch-icon" href="./icons/icon-192.png" />
   <title>Памятки МСП</title>
   <style>
-    :root{--yellow:#FFCD00;--graphite:#504D4A;--gray:#A6A9AA;--soft:#F6F4EF;--line:#E9E5DC;--white:#fff;--radius:22px;--shadow:0 14px 34px rgba(80,77,74,.12)}
+    :root{
+  --yellow:#FFCD00;
+  --graphite:#504D4A;
+  --gray:#A6A9AA;
+  --soft:#F6F4EF;
+  --line:#E9E5DC;
+  --white:#fff;
+  --radius:22px;
+  --shadow:0 14px 34px rgba(80,77,74,.12);
+  --page-x:18px;
+  --gap-y:18px;
+}
     *{box-sizing:border-box}
     body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#fff 0%,#F8F6F0 100%);color:var(--graphite);min-height:100vh;padding-bottom:94px}
     .app{max-width:780px;margin:0 auto}
-    header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);backdrop-filter:blur(18px);border-bottom:1px solid rgba(233,229,220,.85);padding:18px 18px 14px}
+    header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(233,229,220,.85);
+  padding:18px var(--page-x) 18px;
+}
     .topbar{display:flex;align-items:center;gap:12px}
     .logo{width:56px;height:56px;border-radius:16px;overflow:hidden;box-shadow:0 8px 18px rgba(255,205,0,.35);flex-shrink:0;}
 .logo img{width:100%;height:100%;object-fit:cover;display:block;}
     h1{font-size:24px;line-height:1.05;margin:0;font-weight:850;letter-spacing:-.03em}.subtitle{font-size:13px;color:#77716B;margin-top:4px}
     .searchWrap{margin-top:14px;display:flex;gap:10px}.search{width:100%;border:1px solid var(--line);background:#fff;border-radius:18px;padding:14px 16px;font-size:16px;outline:none;color:var(--graphite);box-shadow:0 7px 20px rgba(80,77,74,.06)}
     .installBtn{border:0;background:var(--graphite);color:#fff;border-radius:18px;padding:0 15px;font-weight:750;font-size:14px;display:none}
-    .chips{display:flex;gap:8px;overflow-x:auto;padding:14px 18px 4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+    .chips{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:0 20px;
+  scrollbar-width:none;
+}.chips::-webkit-scrollbar{display:none}
     .chip{border:1px solid var(--line);background:#fff;color:var(--graphite);border-radius:999px;padding:10px 14px;white-space:nowrap;font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(80,77,74,.05)}
     .chip.active{background:var(--yellow);border-color:var(--yellow)}
-    main{padding:10px 18px 22px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 14px}.stat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 8px 22px rgba(80,77,74,.06)}.stat b{display:block;font-size:23px;letter-spacing:-.03em}.stat span{font-size:12px;color:#7B756E}
+    main{
+  padding:18px var(--page-x) 120px;
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:0;
+  padding:0 20px;
+}.stat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 8px 22px rgba(80,77,74,.06)}.stat b{display:block;font-size:23px;letter-spacing:-.03em}.stat span{font-size:12px;color:#7B756E}
     .memo{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin:12px 0;box-shadow:var(--shadow);overflow:hidden}
     .memoHead{padding:18px;}
 .memoTop{
@@ -371,8 +404,8 @@
 }
     @media (max-width:600px){
   main{
-    padding:10px 12px 22px;
-  }
+  padding:18px var(--page-x) 120px;
+}
     .bottom{
   width:calc(100% - 28px);
   bottom:10px;
@@ -524,14 +557,15 @@
     padding:7px 9px;
   }
 }
-    .categoryGroup{
-  margin:18px 0 24px;
+   .categoryGroup{
+  margin:0 0 28px;
 }
 .categoryTitle{
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
-  margin:0 4px 12px;
+  gap:12px;
+  margin:0 0 14px;
 }
 .categoryTitle h2{
   margin:0;
@@ -548,11 +582,11 @@
 .memoScroller{
   display:flex;
   flex-direction:row;
-  gap:14px;
+  gap:16px;
   overflow-x:auto;
   overflow-y:hidden;
   scroll-snap-type:x mandatory;
-  padding:2px 18px 18px 4px;
+ padding:2px 22px 20px 0;
   scrollbar-width:none;
   -webkit-overflow-scrolling:touch;
   width:100%;
@@ -573,7 +607,7 @@
   }
 }
 .collapseBox{
-  margin:12px 0 0;
+  margin:var(--gap-y) var(--page-x) 0;
   background:#fff;
   border:1px solid var(--line);
   border-radius:22px;
@@ -585,7 +619,7 @@
   border:0;
   background:#fff;
   color:var(--graphite);
-  padding:16px 18px;
+  padding:18px 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -599,7 +633,7 @@
 }
 .collapseBody{
   display:none;
-  padding:0 14px 14px;
+  padding:0 0 18px;
 }
 .collapseBox.open .collapseBody{
   display:block;
@@ -607,12 +641,15 @@
 .collapseBox.open .collapseArrow{
   transform:rotate(90deg);
 }
+    .summaryBox{
+  margin:0 0 var(--gap-y);
+}
 }
 </style>
 </head>
 <body>
 <div class="app">
-<header><div class="topbar"><div class="logo"><img src="./icons/icon-192.png" alt="МСП"></div><div><h1>Памятки МСП</h1><div class="subtitle">Технологические карты для сотрудников ГБУ «Мой социальный помощник»</div></div></div><div class="searchWrap"><input id="search" class="search" placeholder="Найти памятку..." /><button id="installBtn" class="installBtn">Установить</button></div></header><div class="collapseBox open" style="margin:12px 18px 0">
+<header><div class="topbar"><div class="logo"><img src="./icons/icon-192.png" alt="МСП"></div><div><h1>Памятки МСП</h1><div class="subtitle">Технологические карты для сотрудников ГБУ «Мой социальный помощник»</div></div></div><div class="searchWrap"><input id="search" class="search" placeholder="Найти памятку..." /><button id="installBtn" class="installBtn">Установить</button></div></header><div class="collapseBox open">
   <button class="collapseHead" type="button" data-collapse>
     <span>Категории</span>
     <span class="collapseArrow">▶</span>
@@ -622,7 +659,7 @@
   </div>
 </div>
   <main>
-    <section id="homePage" class="page active"><div class="collapseBox open" style="margin-left:0;margin-right:0">
+    <section id="homePage" class="page active"><div class="collapseBox open summaryBox">
   <button class="collapseHead" type="button" data-collapse>
     <span>Сводка</span>
     <span class="collapseArrow">▶</span>
