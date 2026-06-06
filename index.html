@@ -524,6 +524,78 @@
     padding:7px 9px;
   }
 }
+    .stackGroup{
+  margin:18px 0 22px;
+}
+.stackTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin:0 4px 12px;
+}
+.stackTitle h2{
+  margin:0;
+  font-size:20px;
+  line-height:1.1;
+  font-weight:850;
+  letter-spacing:-.03em;
+}
+.stackTitle span{
+  font-size:13px;
+  color:#8A847D;
+  font-weight:700;
+}
+.stackWrap{
+  position:relative;
+  display:grid;
+  gap:12px;
+}
+.stackWrap:not(.open) .memo{
+  margin:0;
+  transition:.28s ease;
+}
+.stackWrap:not(.open) .memo:nth-child(1){
+  z-index:3;
+}
+.stackWrap:not(.open) .memo:nth-child(2){
+  z-index:2;
+  margin-top:-278px;
+  transform:scale(.96) translateY(18px);
+  opacity:.72;
+  pointer-events:none;
+}
+.stackWrap:not(.open) .memo:nth-child(3){
+  z-index:1;
+  margin-top:-278px;
+  transform:scale(.92) translateY(36px);
+  opacity:.45;
+  pointer-events:none;
+}
+.stackWrap:not(.open) .memo:nth-child(n+4){
+  display:none;
+}
+.stackWrap.open .memo{
+  margin:12px 0;
+}
+.stackToggle{
+  width:100%;
+  border:0;
+  margin-top:14px;
+  background:#F1EEE6;
+  color:#504D4A;
+  border-radius:16px;
+  padding:13px 16px;
+  font-size:14px;
+  font-weight:850;
+}
+@media (hover:hover){
+  .stackGroup:hover .stackWrap:not(.open) .memo:nth-child(2){
+    transform:scale(.97) translateY(24px);
+  }
+  .stackGroup:hover .stackWrap:not(.open) .memo:nth-child(3){
+    transform:scale(.94) translateY(48px);
+  }
+}
 </style>
 </head>
 <body>
@@ -820,10 +892,37 @@ return `<article class="memo" id="memo-${m.id}">
     <div class="details">${details}</div>
   </article>`;
 }
-  function renderList(targetId,list){
+ function renderList(targetId,list){
   const el=document.getElementById(targetId);
   const arr=filteredMemos(list);
-  el.innerHTML=arr.length?arr.map(memoCard).join(""):`<div class="empty">Ничего не найдено</div>`;}
+  if(!arr.length){
+    el.innerHTML=`<div class="empty">Ничего не найдено</div>`;
+    return;
+  }
+  const groups={};
+  arr.forEach(m=>{
+    if(!groups[m.category]){
+      groups[m.category]=[];
+    }
+    groups[m.category].push(m);
+  });
+  el.innerHTML=Object.entries(groups).map(([category,items],groupIndex)=>{
+    const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
+    return `
+      <section class="stackGroup">
+        <div class="stackTitle">
+          <h2>${category}</h2>
+          <span>${countText}</span>
+        </div>
+        <div class="stackWrap" data-stack="${targetId}-${groupIndex}">
+          ${items.map(memoCard).join("")}
+        </div>
+
+        ${items.length>1 ? `<button class="stackToggle" data-stack-toggle="${targetId}-${groupIndex}">Развернуть стопку</button>` : ""}
+      </section>
+    `;
+  }).join("");
+}
 function bindCards(){
   document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
     const id=Number(btn.dataset.fav);
@@ -849,10 +948,16 @@ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
   document.querySelectorAll("[data-stage]").forEach(head=>head.onclick=()=>{
     head.closest(".stage").classList.toggle("open");
   });
-  document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
-  head.closest(".ruleSection").classList.toggle("open");
-});
-  }
+   document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
+    head.closest(".ruleSection").classList.toggle("open");
+  });
+  document.querySelectorAll("[data-stack-toggle]").forEach(btn=>btn.onclick=()=>{
+    const id=btn.dataset.stackToggle;
+    const stack=document.querySelector(`[data-stack="${id}"]`);
+    stack.classList.toggle("open");
+    btn.textContent=stack.classList.contains("open") ? "Свернуть стопку" : "Развернуть стопку";
+  });
+}
 function renderPages(){
   document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===state.page));
   document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.page===state.page));
