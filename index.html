@@ -27,36 +27,8 @@
     main{padding:10px 18px 22px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 14px}.stat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 8px 22px rgba(80,77,74,.06)}.stat b{display:block;font-size:23px;letter-spacing:-.03em}.stat span{font-size:12px;color:#7B756E}
     .memo{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin:12px 0;box-shadow:var(--shadow);overflow:hidden}.memoHead{padding:16px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
     .tag{display:inline-flex;width:max-content;background:#FFF5BF;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;margin-bottom:8px}.memo h2{font-size:19px;line-height:1.15;margin:0 0 8px;font-weight:850;letter-spacing:-.02em}
-    ..important{
-  position:relative;
-  border-left:5px solid #C96A6A;
-  background:#FCEEEE;
-  border-radius:14px;
-  padding:12px 12px 12px 44px;
-  font-size:14px;
-  line-height:1.35;
-  font-weight:700;
-  color:#6B3F3F;
-}
-
-.important::before{
-  content:"!";
-  position:absolute;
-  left:12px;
-  top:12px;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background:#C96A6A;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:15px;
-  font-weight:900;
-  line-height:1;
-}
-
+    .important{position:relative;border-left:5px solid #C96A6A;background:#FCEEEE;border-radius:14px;padding:12px 12px 12px 44px;font-size:14px;line-height:1.35;font-weight:700;color#6B3F3F;}
+.important::before{content:"!";position:absolute;left:12px;top:12px;width:22px;height:22px;border-radius:50%;background:#C96A6A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;line-height:1;}
 .fav{border:0;background:#F7F4EC;border-radius:14px;width:42px;height:42px;font-size:21px}
     .actions{display:flex;gap:10px;padding:0 16px 16px}.openBtn,.copyBtn{border:0;border-radius:15px;padding:12px 14px;font-weight:800;font-size:14px}.openBtn{background:var(--graphite);color:#fff;flex:1}.copyBtn{background:#F1EEE6;color:var(--graphite)}
     .details{display:none;border-top:1px solid var(--line);padding:0 16px 16px}.memo.open .details{display:block}.section{margin-top:14px;background:#F9F8F4;border-radius:16px;padding:14px}.section h3{margin:0 0 8px;font-size:15px}.section ul{margin:0;padding-left:20px}.section li{margin:6px 0;line-height:1.35}
