@@ -89,7 +89,33 @@
     .actions{display:flex;gap:10px;padding:0 16px 16px}.openBtn,.copyBtn{border:0;border-radius:15px;padding:12px 14px;font-weight:800;font-size:14px}.openBtn{background:var(--graphite);color:#fff;flex:1}.copyBtn{background:#F1EEE6;color:var(--graphite)}
     .details{display:none;border-top:1px solid var(--line);padding:0 16px 16px}.memo.open .details{display:block}.section{margin-top:14px;background:#F9F8F4;border-radius:16px;padding:14px}.section h3{margin:0 0 8px;font-size:15px}.section ul{margin:0;padding-left:20px}.section li{margin:6px 0;line-height:1.35}
     .stage{margin-top:14px;background:#F9F8F4;border-radius:16px;padding:14px}
-.stageHead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.stageHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  cursor:pointer;
+}
+.stageLeft{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.stageArrow{
+  font-size:14px;
+  font-weight:900;
+  transition:.2s;
+}
+.stageBody{
+  display:none;
+  margin-top:14px;
+}
+.stage.open .stageBody{
+  display:block;
+}
+.stage.open .stageArrow{
+  transform:rotate(90deg);
+}
 .stageTitle{font-size:15px;font-weight:850;line-height:1.25}
 .stageTime{flex:0 0 auto;background:#FFF5BF;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:850;color:#504D4A}
 .checkList{list-style:none;margin:0;padding:0}
@@ -119,7 +145,7 @@
 <nav class="bottom"><button class="navBtn active" data-page="homePage"><span>⌂</span>Памятки</button><button class="navBtn" data-page="favPage"><span>★</span>Избранное</button><button class="navBtn" data-page="infoPage"><span>📖</span>Глоссарий</button></nav>
 <script>
 const MEMOS=[{id:1,title:"Смена постельного белья",category:"Социально-гигиенические",duration:"10 минут",frequency:"1 раз в неделю",inventory:"Постельное белье, емкость для грязного белья",important:"Важно помнить: не допускайте складок и неровностей на простыне. Следите, чтобы грязное белье не соприкасалось с чистым.",sections:[{title:"Разъяснение условий получения социальной услуги",time:"1 минута",items:["Обговорите условия оказания социальной услуги с получателем социальных услуг","Обсудите с получателем социальных услуг этапы и порядок смены постельного белья","Выберите с получателем социальных услуг комплект чистого постельного белья для замены грязного из имеющихся"]},{title:"Согласование хода выполнения социальной услуги",time:"1 минута",items:["Обговорите этапы выполнения социальной услуги","Получите согласие получателя социальных услуг на оказание социальной услуги, согласно ранее обговоренным условиям и этапам"]},{title:"Подготовка к смене белья",time:"2 минуты",items:["Помойте руки и вытрите насухо","Подготовьте постельное белье на смену и емкость для грязного белья","Убедитесь, что в кровати нет личных вещей получателя социальных услуг (телефона, слухового аппарата, зубных протезов). При наличии — уберите их в место, указанное получателем социальных услуг"]},{title:"Смена постельного белья продольным способом",time:"5 минут",items:["Подготовьте чистую простыню: скатайте валиком половину простыни по длинной стороне, отложите ее в сторону","Уберите одеяло, осторожно приподнимите голову получателя социальных услуг и уберите подушки","Поверните получателя социальных услуг на бок от себя","С освободившейся стороны постели скатайте простыню валиком к середине кровати (под получателя социальных услуг)","На освободившуюся часть кровати раскатайте подготовленную чистую простыню валиком к получателю социальных услуг","Разверните получателя социальных услуг на другой бок лицом к себе","Уберите грязную простыню с освободившейся части кровати и положите в емкость для грязного белья, раскатайте до конца чистую","Чистую простыню со всех сторон подверните под матрац так, чтобы не было складок","Уложите получателя социальных услуг на спину, подложите подушки в чистых наволочках","Поменяйте пододеяльник на одеяле, укройте получателя социальных услуг"]},{title:"Важно помнить",items:["<b>Если маломобильный получатель социальных услуг находится в функциональной кровати</b>, до начала смены постельного белья <b>опустите изголовье кровати</b>",
-"При смене постельного белья <b>следите, чтобы грязное белье не соприкасалось с чистым бельем</b>","<b>Запрещено оставление складок и неровностей на простыне</b> в отношении получателя социальных услуг, вынужденно находящихся на постельном режиме, <b>в целях недопущения образования пролежней</b>","<b>Запрещена замена постельного белья</b> на текстильные и иные изделия, <b>не относящиеся к элементам постельного белья</b>"]},{title:"Уборка грязного постельного белья",time:"1 минута",items:["Поместите емкость для грязного белья в место, указанное получателем социальных услуг","Помойте руки и вытрите насухо"]}]},{id:2,title:"Покупка и доставка продуктов",category:"Быт",important:"Список покупок и сумму необходимо согласовать заранее. Чеки сохраняются.",sections:[{title:"Перед выходом",items:["Уточнить список продуктов","Согласовать бюджет","Проверить адрес магазина и маршрут"]},{title:"После покупки",items:["Передать продукты получателю","Передать чек","Уточнить, нужна ли помощь с размещением продуктов"]}]},{id:3,title:"Контроль состояния получателя",category:"Контроль",important:"Любые резкие изменения состояния, быта или поведения нужно зафиксировать и передать заведующему.",sections:[{title:"На что смотреть",items:["Самочувствие и внешний вид","Наличие еды и лекарств","Безопасность в квартире","Признаки загрязнения или захламления"]},{title:"Когда сообщать срочно",items:["Падение или травма","Жалобы на сильную боль","Признаки отсутствия ухода","Опасные бытовые условия"]}]},{id:4,title:"Документы и отчетность",category:"Документы",important:"Данные вносятся своевременно. Ошибки в учете влияют на качество контроля услуги.",sections:[{title:"Что фиксировать",items:["Дата и время визита","Фактически оказанные услуги","Комментарий при отклонении от плана","Подтверждающие документы при необходимости"]},{title:"Чего избегать",items:["Не переносить данные задним числом без основания","Не оставлять пустые поля","Не менять кратность услуги без документов"]}]}];
+"При смене постельного белья <b>следите, чтобы грязное белье не соприкасалось с чистым бельем</b>","<b>Запрещено оставление складок и неровностей на простыне</b> в отношении получателя социальных услуг, вынужденно находящихся на постельном режиме, <b>в целях недопущения образования пролежней</b>","<b>Запрещена замена постельного белья</b> на текстильные и иные изделия, <b>не относящиеся к элементам постельного белья</b>"]},{title:"Уборка грязного постельного белья",time:"1 минута",items:["Поместите емкость для грязного белья в место, указанное получателем социальных услуг","Помойте руки и вытрите насухо"]}]}
 const state={search:"",category:"Все",favs:JSON.parse(localStorage.getItem("msp_favs")||"[]"),page:"homePage"};const cats=["Все",...new Set(MEMOS.map(m=>m.category))];function saveFavs(){localStorage.setItem("msp_favs",JSON.stringify(state.favs))}
 function filteredMemos(list=MEMOS){return list.filter(m=>{const q=state.search.toLowerCase();const text=(m.title+" "+m.category+" "+m.important+" "+m.sections.map(s=>s.items.join(" ")).join(" ")).toLowerCase();return(!q||text.includes(q))&&(state.category==="Все"||m.category===state.category)})}
 function renderChips(){const el=document.getElementById("chips");el.innerHTML=cats.map(c=>`<button class="chip ${c===state.category?'active':''}" data-cat="${c}">${c}</button>`).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{state.category=btn.dataset.cat;render()})}
@@ -130,12 +156,18 @@ function memoCard(m){
     const listItems = important
       ? s.items.map(i=>`<li class="importantItem">${i}</li>`).join("")
       : s.items.map((i,itemIndex)=>`<li class="checkItem"><label><input type="checkbox" data-check="${m.id}-${sectionIndex}-${itemIndex}"><span>${i}</span></label></li>`).join("");
-    return `<div class="stage ${important?"importantSection":""}">
-      <div class="stageHead">
-        <div class="stageTitle">${s.title}</div>
+ return `<div class="stage ${important?"importantSection":""}">
+      <div class="stageHead" data-stage>
+        <div class="stageLeft">
+          <span class="stageArrow">▶</span>
+          <div class="stageTitle">${s.title}</div>
+        </div>
         ${s.time?`<div class="stageTime">⏱ ${s.time}</div>`:""}
       </div>
-      <ul class="${important?"importantList":"checkList"}">${listItems}</ul>
+
+      <div class="stageBody">
+        <ul class="${important?"importantList":"checkList"}">${listItems}</ul>
+      </div>
     </div>`;
   }).join("");
   return `<article class="memo" id="memo-${m.id}">
@@ -165,6 +197,7 @@ function memoCard(m){
     </div>
   </div>
 </div>
+    </div>
     <div class="actions">
       <button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button>
       <button class="copyBtn" data-copy="${m.id}">Копия</button>
@@ -197,7 +230,11 @@ function bindCards(){
       btn.textContent="Скопировано";
       setTimeout(()=>btn.textContent="Копия",1200);
     }catch(e){}
-  });}
+   });
+  document.querySelectorAll("[data-stage]").forEach(head=>head.onclick=()=>{
+    head.closest(".stage").classList.toggle("open");
+  });
+}
 function renderPages(){
   document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===state.page));
   document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.page===state.page));
