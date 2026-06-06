@@ -524,69 +524,49 @@
     padding:7px 9px;
   }
 }
-    .stackGroup{
-  margin:18px 0 22px;
+    .categoryGroup{
+  margin:18px 0 24px;
 }
-.stackTitle{
+.categoryTitle{
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
   margin:0 4px 12px;
 }
-.stackTitle h2{
+.categoryTitle h2{
   margin:0;
   font-size:20px;
   line-height:1.1;
   font-weight:850;
   letter-spacing:-.03em;
 }
-.stackTitle span{
+.categoryTitle span{
   font-size:13px;
   color:#8A847D;
   font-weight:700;
 }
-.stackWrap{
-  position:relative;
-  display:grid;
-  gap:12px;
+.memoScroller{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  padding:2px 4px 18px;
+  scrollbar-width:none;
 }
-.stackWrap:not(.open) .memo{
-  margin:0;
-  transition:.28s ease;
-}
-.stackWrap:not(.open) .memo:nth-child(1){
-  z-index:3;
-}
-.stackWrap:not(.open) .memo:nth-child(2){
-  z-index:2;
-  margin-top:-278px;
-  transform:scale(.96) translateY(18px);
-  opacity:.72;
-  pointer-events:none;
-}
-.stackWrap:not(.open) .memo:nth-child(3){
-  z-index:1;
-  margin-top:-278px;
-  transform:scale(.92) translateY(36px);
-  opacity:.45;
-  pointer-events:none;
-}
-.stackWrap:not(.open) .memo:nth-child(n+4){
+.memoScroller::-webkit-scrollbar{
   display:none;
 }
-.stackWrap.open .memo{
-  margin:12px 0;
+.memoScroller .memo{
+  flex:0 0 88%;
+  max-width:520px;
+  scroll-snap-align:start;
+  margin:0;
 }
-.stackToggle{
-  width:100%;
-  border:0;
-  margin-top:14px;
-  background:#F1EEE6;
-  color:#504D4A;
-  border-radius:16px;
-  padding:13px 16px;
-  font-size:14px;
-  font-weight:850;
+@media (min-width:760px){
+  .memoScroller .memo{
+    flex-basis:70%;
+  }
 }
 @media (hover:hover){
   .stackGroup:hover .stackWrap:not(.open) .memo:nth-child(2){
@@ -1013,6 +993,29 @@ return `<article class="memo" id="memo-${m.id}">
     }
     groups[m.category].push(m);
   });
+  el.innerHTML=Object.entries(groups).map(([category,items])=>{
+    const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
+    return `
+      <section class="categoryGroup">
+        <div class="categoryTitle">
+          <h2>${category}</h2>
+          <span>${countText}</span>
+        </div>
+
+        <div class="memoScroller">
+          ${items.map(memoCard).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+}
+  const groups={};
+  arr.forEach(m=>{
+    if(!groups[m.category]){
+      groups[m.category]=[];
+    }
+    groups[m.category].push(m);
+  });
   el.innerHTML=Object.entries(groups).map(([category,items],groupIndex)=>{
     const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
     return `
@@ -1057,12 +1060,6 @@ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
   });
    document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
     head.closest(".ruleSection").classList.toggle("open");
-  });
-  document.querySelectorAll("[data-stack-toggle]").forEach(btn=>btn.onclick=()=>{
-    const id=btn.dataset.stackToggle;
-    const stack=document.querySelector(`[data-stack="${id}"]`);
-    stack.classList.toggle("open");
-    btn.textContent=stack.classList.contains("open") ? "Свернуть стопку" : "Развернуть стопку";
   });
 }
 function renderPages(){
