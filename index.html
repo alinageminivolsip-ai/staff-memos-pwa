@@ -1244,11 +1244,8 @@ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
 
   btn.textContent=card.classList.contains("open") ? "Свернуть" : "Раскрыть инструкцию";
 });
-  const card=btn.closest(".memo");
-  card.classList.toggle("open");
-  btn.textContent=card.classList.contains("open")?"Свернуть":"Раскрыть инструкцию";
-});
-  document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=async()=>{
+
+document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=async()=>{
     const id=Number(btn.dataset.copy);
     const m=MEMOS.find(x=>x.id===id);
     const text=`${m.title}\n\nВажно: ${m.important}\n\n`+m.sections.map(s=>`${s.title}\n- ${s.items.join("\n- ")}`).join("\n\n");
