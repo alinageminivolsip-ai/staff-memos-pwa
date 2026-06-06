@@ -217,12 +217,19 @@
   margin:22px 0 22px;
 }
 .heroMeta{
-  display:none;
+  display:grid;
   gap:14px;
   max-width:52%;
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+  transform:translateY(-6px);
+  transition:opacity .25s ease, max-height .35s ease, transform .25s ease;
 }
 .memo.open .heroMeta{
-  display:grid;
+  opacity:1;
+  max-height:220px;
+  transform:translateY(0);
 }
 .heroMetaItem{
   display:grid;
@@ -253,7 +260,7 @@
   border-radius:22px;
   height:250px;
   margin-bottom:14px;
-  transition:.25s ease;
+  transition:height .35s ease;
 }
 .memo.open .heroBlock{
   height:470px;
