@@ -690,6 +690,49 @@
    .summaryBox{
   margin:0 0 var(--gap-y);
 }
+    .progressCard{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 8px 22px rgba(80,77,74,.06);
+  padding:16px 18px;
+  margin:0 0 var(--gap-y);
+}
+
+.progressTop{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.progressTitle{
+  font-size:16px;
+  font-weight:850;
+}
+
+.progressCount{
+  font-size:13px;
+  color:#8A847D;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.progressBar{
+  height:12px;
+  background:#F1EEE6;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.progressFill{
+  height:100%;
+  width:0%;
+  background:var(--yellow);
+  border-radius:999px;
+  transition:.3s ease;
+}
 </style>
 </head>
 <body>
@@ -721,7 +764,20 @@
       </div>
     </div>
   </div>
-</div><div id="memoList"></div></section>
+</div>
+
+<div class="progressCard">
+  <div class="progressTop">
+    <div class="progressTitle">Изучено памяток</div>
+    <div class="progressCount" id="progressCount">0 из 0</div>
+  </div>
+  <div class="progressBar">
+    <div class="progressFill" id="progressFill"></div>
+  </div>
+</div>
+
+<div id="memoList"></div>
+</section>
     <section id="favPage" class="page"><div class="infoCard"><b>Избранное</b><br>Здесь будут памятки, которые Вы добавили в избранное и используете чаще всего.</div><div id="favList"></div></section>
 <section id="rulesPage" class="page">
   <div class="infoCard">
@@ -1069,10 +1125,19 @@ items:[
 ]
 }
 ];
-const state={search:"",category:"Все",favs:JSON.parse(localStorage.getItem("msp_favs")||"[]"),page:"homePage"};
+const state={
+  search:"",
+  category:"Все",
+  favs:JSON.parse(localStorage.getItem("msp_favs")||"[]"),
+  viewed:JSON.parse(localStorage.getItem("msp_viewed")||"[]"),
+  page:"homePage"
+};
 const cats=["Все",...new Set(MEMOS.map(m=>m.category))];
 function saveFavs(){
   localStorage.setItem("msp_favs",JSON.stringify(state.favs));
+}
+  function saveViewed(){
+  localStorage.setItem("msp_viewed",JSON.stringify(state.viewed));
 }
 function filteredMemos(list=MEMOS){return list.filter(m=>{const q=state.search.toLowerCase();const text=(m.title+" "+m.category+" "+m.important+" "+m.sections.map(s=>s.items.join(" ")).join(" ")).toLowerCase();return(!q||text.includes(q))&&(state.category==="Все"||m.category===state.category)})}
 function renderChips(){const el=document.getElementById("chips");el.innerHTML=cats.map(c=>`<button class="chip ${c===state.category?'active':''}" data-cat="${c}">${c}</button>`).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{state.category=btn.dataset.cat;render()})}
@@ -1166,6 +1231,19 @@ function bindCards(){
     render();
   });
 document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
+  const id=Number(btn.dataset.open);
+  const card=btn.closest(".memo");
+
+  card.classList.toggle("open");
+
+  if(card.classList.contains("open") && !state.viewed.includes(id)){
+    state.viewed.push(id);
+    saveViewed();
+    renderProgress();
+  }
+
+  btn.textContent=card.classList.contains("open") ? "Свернуть" : "Раскрыть инструкцию";
+});
   const card=btn.closest(".memo");
   card.classList.toggle("open");
   btn.textContent=card.classList.contains("open")?"Свернуть":"Раскрыть инструкцию";
@@ -1210,7 +1288,20 @@ function renderGlossary(){
     empty.style.display=visibleCount ? "none" : "block";
   }
 }
-function renderPages(){
+function renderProgress(){
+  const count=document.getElementById("progressCount");
+  const fill=document.getElementById("progressFill");
+
+  if(!count || !fill) return;
+
+  const total=MEMOS.length;
+  const viewed=state.viewed.filter(id=>MEMOS.some(m=>m.id===id)).length;
+  const percent=total ? Math.round((viewed / total) * 100) : 0;
+
+  count.textContent=`${viewed} из ${total}`;
+  fill.style.width=`${percent}%`;
+}
+  function renderPages(){
   document.querySelectorAll(".page").forEach(p=>{
     p.classList.toggle("active",p.id===state.page);
   });
@@ -1239,9 +1330,10 @@ function renderPages(){
   document.getElementById("favCount").textContent=state.favs.length;
   renderList("memoList",MEMOS);
   renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));
-  renderGlossary();
-  renderPages();
-  bindCards();
+renderGlossary();
+renderProgress();
+renderPages();
+bindCards();
 }
 document.getElementById("search").addEventListener("input",e=>{
   state.search=e.target.value;
