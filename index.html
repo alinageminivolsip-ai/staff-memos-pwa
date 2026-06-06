@@ -789,7 +789,12 @@
   color:#504D4A;
   text-align:center;
 }
-
+.loaderPercent{
+  font-size:13px;
+  font-weight:850;
+  color:#504D4A;
+  margin-top:-4px;
+}
 #loaderText{
   font-size:15px;
   color:#8A847D;
@@ -837,7 +842,7 @@
   </div>
 
   <div id="loaderText"></div>
-
+<div class="loaderPercent" id="loaderPercent">0%</div>
   <div class="loaderBar">
     <div class="loaderBarFill"></div>
   </div>
@@ -1468,6 +1473,7 @@ document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
 ];
 
 const loaderText=document.getElementById("loaderText");
+const loaderPercent=document.getElementById("loaderPercent");
 
 if(loaderText){
   loaderText.textContent =
@@ -1481,13 +1487,23 @@ function hideLoader(){
   }
 }
 
-if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
-}
+let percent=0;
 
-render();
+const loadingTimer=setInterval(()=>{
+  if(percent < 99){
+    percent += Math.floor(Math.random() * 7) + 2;
+    if(percent > 99) percent = 99;
+    if(loaderPercent) loaderPercent.textContent = percent + "%";
+  }else{
+    clearInterval(loadingTimer);
 
-setTimeout(hideLoader,1400);
+    setTimeout(()=>{
+      percent = 100;
+      if(loaderPercent) loaderPercent.textContent = "100%";
+      setTimeout(hideLoader,450);
+    },650);
+  }
+},120);
 </script>
 </body>
 </html>
