@@ -72,7 +72,38 @@ const details=m.sections.map((s,sectionIndex)=>{
 const important=s.title.toLowerCase().includes("важно");
 return `<div class="stage ${important?"importantSection":""}"><div class="stageHead"><div class="stageTitle">${s.title}</div>${s.time?`<div class="stageTime">⏱ ${s.time}</div>`:""}</div><ul class="checkList">${s.items.map((i,itemIndex)=>`<li class="checkItem"><label><input type="checkbox" data-check="${m.id}-${sectionIndex}-${itemIndex}"><span>${i}</span></label></li>`).join("")}</ul></div>`;}).join("");
 return `<article class="memo" id="memo-${m.id}"><div class="memoHead"><div><div class="tag">${m.category}</div><h2>${m.title}</h2><div class="important">${m.important}</div></div><button class="fav" data-fav="${m.id}">${isFav?"★":"☆"}</button></div><div class="actions"><button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button><button class="copyBtn" data-copy="${m.id}">Копия</button></div><div class="details">${details}</div></article>`;}
-function render(){renderChips();document.getElementById("totalCount").textContent=MEMOS.length;document.getElementById("favCount").textContent=state.favs.length;renderList("memoList",MEMOS);renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));renderPages();bindCards()}
+function renderList(targetId,list){
+  const el=document.getElementById(targetId);
+  const arr=filteredMemos(list);
+  el.innerHTML=arr.length?arr.map(memoCard).join(""):`<div class="empty">Ничего не найдено</div>`;
+}
+function bindCards(){
+  document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
+    const id=Number(btn.dataset.fav);
+    state.favs=state.favs.includes(id)?state.favs.filter(x=>x!==id):[...state.favs,id];
+    saveFavs();
+    render();
+  });
+  document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
+    const card=document.getElementById("memo-"+btn.dataset.open);
+    card.classList.toggle("open");
+    btn.textContent=card.classList.contains("open")?"Свернуть":"Раскрыть инструкцию";
+  });
+  document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=async()=>{
+    const id=Number(btn.dataset.copy);
+    const m=MEMOS.find(x=>x.id===id);
+    const text=`${m.title}\n\nВажно: ${m.important}\n\n`+m.sections.map(s=>`${s.title}\n- ${s.items.join("\n- ")}`).join("\n\n");
+    try{
+      await navigator.clipboard.writeText(text);
+      btn.textContent="Скопировано";
+      setTimeout(()=>btn.textContent="Копия",1200);
+    }catch(e){}
+  });
+}
+function renderPages(){
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===state.page));
+  document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.page===state.page));
+}function render(){renderChips();document.getElementById("totalCount").textContent=MEMOS.length;document.getElementById("favCount").textContent=state.favs.length;renderList("memoList",MEMOS);renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));renderPages();bindCards()}
 document.getElementById("search").addEventListener("input",e=>{state.search=e.target.value;render()});document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{state.page=btn.dataset.page;renderPages()});
 let deferredPrompt;const installBtn=document.getElementById("installBtn");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display="block"});installBtn.addEventListener("click",async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt=null;installBtn.style.display="none"});if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"))}render();
 </script>
