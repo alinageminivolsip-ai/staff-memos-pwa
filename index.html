@@ -26,10 +26,39 @@
     .chip{border:1px solid var(--line);background:#fff;color:var(--graphite);border-radius:999px;padding:10px 14px;white-space:nowrap;font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(80,77,74,.05)}
     .chip.active{background:var(--yellow);border-color:var(--yellow)}
     main{padding:10px 18px 22px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 14px}.stat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 8px 22px rgba(80,77,74,.06)}.stat b{display:block;font-size:23px;letter-spacing:-.03em}.stat span{font-size:12px;color:#7B756E}
-    .memo{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin:12px 0;box-shadow:var(--shadow);overflow:hidden}.memoHead{padding:16px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
+    .memo{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin:12px 0;box-shadow:var(--shadow);overflow:hidden}
+    .memoHead{padding:18px;}
+.memoTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;}
+    .fav{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  border:1px solid #D9D4CB;
+  background:#F8F5EE;
+  cursor:pointer;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
     .tag{display:inline-flex;width:max-content;background:#FFF5BF;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;margin-bottom:8px}
-    .serviceMeta{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px;}
-.serviceMeta > div{background:#F9F8F4;border:1px solid #E9E5DC;border-radius:12px;padding:8px 12px;}
+.serviceMeta{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:14px 0;
+}
+.serviceMeta > div{
+  background:#F9F8F4;
+  border:1px solid #E9E5DC;
+  border-radius:14px;
+  padding:12px;
+}
 .metaLabel{display:block;font-size:11px;color:#8A847D;margin-bottom:3px;}
 .metaValue{display:block;font-size:13px;font-weight:800;color:#504D4A;}
 .memo h2{font-size:19px;line-height:1.15;margin:0 0 8px;font-weight:850;letter-spacing:-.02em}
@@ -89,7 +118,45 @@ function memoCard(m){
       </div>
       <ul class="${important?"importantList":"checkList"}">${listItems}</ul>
     </div>`;}).join("");
-  return `<article class="memo" id="memo-${m.id}"><div class="memoHead"><div class="tag">${m.category}</div><div class="serviceMeta"><div><span class="metaLabel">Вид услуги</span><span class="metaValue">Социально-бытовая</span></div><div><span class="metaLabel">Кратность</span><span class="metaValue">1 раз в неделю</span></div><div><span class="metaLabel">Длительность</span><span class="metaValue">10 минут</span></div></div><h2>${m.title}</h2><div class="important">${m.important}</div></div><button class="fav" data-fav="${m.id}">${isFav?"★":"☆"}</button></div><div class="actions"><button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button><button class="copyBtn" data-copy="${m.id}">Копия</button></div><div class="details">${details}</div></article>`;}
+ return `<article class="memo" id="memo-${m.id}">
+  <div class="memoHead">
+    <div class="memoTop">
+      <div class="tag">${m.category}</div>
+      <button class="fav" data-fav="${m.id}">
+        ${isFav ? "★" : "☆"}
+      </button>
+    </div>
+    <h2>${m.title}</h2>
+    <div class="serviceMeta">
+      <div>
+        <span class="metaLabel">Вид услуги</span>
+        <span class="metaValue">Социально-бытовая</span>
+      </div>
+      <div>
+        <span class="metaLabel">Кратность</span>
+        <span class="metaValue">1 раз в неделю</span>
+      </div>
+      <div>
+        <span class="metaLabel">Длительность</span>
+        <span class="metaValue">10 минут</span>
+      </div>
+    </div>
+    <div class="important">
+      ${m.important}
+    </div>
+  </div>
+  <div class="actions">
+    <button class="openBtn" data-open="${m.id}">
+      Раскрыть инструкцию
+    </button>
+    <button class="copyBtn" data-copy="${m.id}">
+      Копия
+    </button>
+  </div>
+  <div class="details">
+    ${details}
+  </div>
+</article>`;<div><span class="metaLabel">Вид услуги</span><span class="metaValue">Социально-бытовая</span></div><div><span class="metaLabel">Кратность</span><span class="metaValue">1 раз в неделю</span></div><div><span class="metaLabel">Длительность</span><span class="metaValue">10 минут</span></div></div><h2>${m.title}</h2><div class="important">${m.important}</div></div><button class="fav" data-fav="${m.id}">${isFav?"★":"☆"}</button></div><div class="actions"><button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button><button class="copyBtn" data-copy="${m.id}">Копия</button></div><div class="details">${details}</div></article>`;}
 function renderList(targetId,list){
   const el=document.getElementById(targetId);
   const arr=filteredMemos(list);
