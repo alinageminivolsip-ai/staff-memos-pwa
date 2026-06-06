@@ -206,17 +206,23 @@
 }
 .heroOverlay h2{
   color:#504D4A;
-  margin:22px 0 18px;
+  margin:22px 0 0;
   font-size:30px;
   line-height:1.02;
   font-weight:850;
   letter-spacing:-.035em;
   max-width:48%;
 }
+.memo.open .heroOverlay h2{
+  margin:22px 0 22px;
+}
 .heroMeta{
+  display:none;
+  gap:14px;
+  max-width:52%;
+}
+.memo.open .heroMeta{
   display:grid;
-  gap:9px;
-  max-width:48%;
 }
 .heroMetaItem{
   display:grid;
@@ -241,13 +247,20 @@
   .memoHead{
     padding:10px;
   }
-  .heroBlock{
-    position:relative;
-    overflow:hidden;
-    border-radius:22px;
-    height:360px;
-    margin-bottom:14px;
-  }
+.heroBlock{
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  height:250px;
+  margin-bottom:14px;
+  transition:.25s ease;
+}
+.memo.open .heroBlock{
+  height:470px;
+}
+.memo.open .heroBlock{
+  height:420px;
+}
   .heroImage{
     width:100%;
     height:100%;
@@ -276,17 +289,20 @@
     padding:5px 10px;
     margin-bottom:0;
   }
-  .heroOverlay h2{
-    font-size:24px;
-    line-height:1.04;
-    max-width:48%;
-    margin:22px 0 18px;
-    letter-spacing:-.035em;
-  }
-  .heroMeta{
-    max-width:46%;
-    gap:8px;
-  }
+.heroOverlay h2{
+  font-size:22px;
+  line-height:1.04;
+  max-width:48%;
+  margin:18px 0 0;
+  letter-spacing:-.035em;
+}
+.memo.open .heroOverlay h2{
+  margin:18px 0 20px;
+}
+.heroMeta{
+  max-width:50%;
+  gap:12px;
+}
   .heroMetaItem{
     gap:2px;
   }
