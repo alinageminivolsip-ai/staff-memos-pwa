@@ -206,7 +206,7 @@
 }
 .heroOverlay h2{
   color:#504D4A;
-  margin:22px 0 18px;
+margin:28px 0 22px;
   font-size:34px;
   line-height:1.05;
   font-weight:900;
@@ -214,13 +214,25 @@
   max-width:58%;
 }
 .heroMeta{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+  display:grid;
+  gap:14px;
+  max-width:52%;
+}
+.heroMetaItem{
+  display:grid;
+  gap:4px;
+}
+.heroMetaItem span{
+  font-size:13px;
+  line-height:1.2;
+  color:#8A847D;
+  font-weight:500;
+}
+.heroMetaItem b{
+  font-size:17px;
+  line-height:1.25;
   color:#504D4A;
-  font-size:16px;
-  font-weight:850;
-  max-width:58%;
+  font-weight:750;
 }
 .heroMeta div{
   line-height:1.25;
@@ -348,10 +360,19 @@ return `<article class="memo" id="memo-${m.id}">
         <div class="tag">${m.category}</div>
         <h2>${m.title}</h2>
         <div class="heroMeta">
-          <div>🕒 ${m.duration}</div>
-          <div>📅 ${m.frequency}</div>
-          <div>🧺 ${m.inventory}</div>
-        </div>
+  <div class="heroMetaItem">
+    <span>Длительность</span>
+    <b>🕒 ${m.duration}</b>
+  </div>
+  <div class="heroMetaItem">
+    <span>Кратность оказания</span>
+    <b>📅 ${m.frequency}</b>
+  </div>
+  <div class="heroMetaItem">
+    <span>Инвентарь</span>
+    <b>🧺 ${m.inventory}</b>
+  </div>
+</div>
       </div>
     </div>
   </div>
