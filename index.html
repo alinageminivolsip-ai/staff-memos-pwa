@@ -120,7 +120,41 @@
 .section.importantSection{position:relative;background:#FCEEEE;border-left:5px solid #C96A6A;color:#6B3F3F;padding-left:44px}
 .section.importantSection::before{content:"!";position:absolute;left:14px;top:15px;width:22px;height:22px;border-radius:50%;background:#C96A6A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;line-height:1}
 .section.importantSection h3{color:#6B3F3F}
-    .actions{display:flex;gap:10px;padding:0 16px 16px}.openBtn,.copyBtn{border:0;border-radius:15px;padding:12px 14px;font-weight:800;font-size:14px}.openBtn{background:var(--graphite);color:#fff;flex:1}.copyBtn{background:#F1EEE6;color:var(--graphite)}
+    .actions{
+  display:flex;
+  gap:10px;
+  padding:0 16px 16px;
+}
+
+.openBtn,
+.favAction{
+  border:0;
+  border-radius:15px;
+  padding:12px 14px;
+  font-weight:800;
+  font-size:14px;
+  min-height:48px;
+}
+
+.openBtn{
+  background:var(--graphite);
+  color:#fff;
+  flex:1;
+}
+
+.favAction{
+  width:64px;
+  background:#F1EEE6;
+  color:var(--graphite);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+}
+
+.favAction.active{
+  background:var(--yellow);
+}
     .details{display:none;border-top:1px solid var(--line);padding:0 16px 16px}.memo.open .details{display:block}.section{margin-top:14px;background:#F9F8F4;border-radius:16px;padding:14px}.section h3{margin:0 0 8px;font-size:15px}.section ul{margin:0;padding-left:20px}.section li{margin:6px 0;line-height:1.35}
     .stage{margin-top:14px;background:#F9F8F4;border-radius:16px;padding:14px}
 .stageHead{
@@ -1055,9 +1089,6 @@ return `<article class="memo" id="memo-${m.id}">
   <div class="memoHead">
  <div class="heroBlock">
   <img src="${m.image}" class="heroImage" alt="">
-  <button class="fav heroFav ${isFav?"active":""}" data-fav="${m.id}">
-    ${isFav?"★":"☆"}
-  </button>
   <div class="heroOverlay">
     <div class="tag">${m.category}</div>
     <h2>${m.title}</h2>
@@ -1077,11 +1108,12 @@ return `<article class="memo" id="memo-${m.id}">
     </div>
   </div>
 </div>
-  <div class="actions">
-      <button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button>
-      <button class="copyBtn" data-copy="${m.id}">Копия</button>
-    </div>
-    <div class="details">${details}</div>
+ <div class="actions">
+  <button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button>
+  <button class="favAction ${isFav?"active":""}" data-fav="${m.id}">
+    ${isFav?"★":"☆"}
+  </button>
+</div>
   </article>`;
 }
  function renderList(targetId,list){
