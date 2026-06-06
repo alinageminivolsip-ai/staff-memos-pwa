@@ -759,9 +759,88 @@
   line-height:1.35;
   color:#77716B;
 }
+    #loader{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  z-index:99999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  padding:28px;
+  transition:.45s ease;
+}
+
+#loader.hide{
+  opacity:0;
+  visibility:hidden;
+}
+
+.loaderHeart{
+  font-size:44px;
+  animation:pulse 1.2s infinite;
+}
+
+.loaderTitle{
+  font-size:20px;
+  font-weight:850;
+  color:#504D4A;
+  text-align:center;
+}
+
+#loaderText{
+  font-size:15px;
+  color:#8A847D;
+  text-align:center;
+  max-width:280px;
+  line-height:1.35;
+}
+
+.loaderBar{
+  width:180px;
+  height:8px;
+  background:#F1EEE6;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.loaderBarFill{
+  height:100%;
+  width:0%;
+  background:#FFCD00;
+  border-radius:999px;
+  animation:loaderFill 1.2s ease forwards;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.12)}
+  100%{transform:scale(1)}
+}
+
+@keyframes loaderFill{
+  from{width:0%}
+  to{width:100%}
+}
 </style>
 </head>
-<body>
+<div id="loader">
+  <div class="loaderHeart">❤️</div>
+
+  <div class="loaderTitle">
+    Загрузка памяток МСП
+  </div>
+
+  <div id="loaderText"></div>
+
+  <div class="loaderBar">
+    <div class="loaderBarFill"></div>
+  </div>
+</div>
+  <body>
 <div class="app">
 <header><div class="topbar"><div class="logo"><img src="./icons/icon-192.png" alt="МСП"></div><div><h1>Памятки МСП</h1><div class="subtitle">Технологические карты для сотрудников ГБУ «Мой социальный помощник»</div></div></div><div class="searchWrap"><input id="search" class="search" placeholder="Найти памятку..." /><button id="installBtn" class="installBtn">Установить</button></div></header><div class="collapseBox">
   <button class="collapseHead" type="button" data-collapse>
@@ -1260,6 +1339,32 @@ function bindCards(){
     const id=Number(btn.dataset.fav);
     state.favs=state.favs.includes(id)?state.favs.filter(x=>x!==id):[...state.favs,id];
     saveFavs();
+    const LOADING_TEXTS = [
+  "История заботы начинается...",
+  "Каждое посещение важно",
+  "Маленькая помощь имеет большое значение",
+  "Забота начинается с внимания",
+  "Спасибо за ежедневную поддержку людей",
+  "Добрые дела складываются в большие результаты",
+  "Тепло начинается с простого участия",
+  "Каждый визит делает жизнь комфортнее"
+];
+
+const loaderText=document.getElementById("loaderText");
+
+if(loaderText){
+  loaderText.textContent =
+    LOADING_TEXTS[Math.floor(Math.random() * LOADING_TEXTS.length)];
+}
+
+window.addEventListener("load",()=>{
+  setTimeout(()=>{
+    const loader=document.getElementById("loader");
+    if(loader){
+      loader.classList.add("hide");
+    }
+  },1200);
+});
     render();
   });
 document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
