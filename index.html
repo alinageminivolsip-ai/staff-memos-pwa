@@ -128,36 +128,8 @@ function memoCard(m){
     </div>
     <h2>${m.title}</h2>
     <div class="serviceMeta">
-      <div>
-        <span class="metaLabel">Вид услуги</span>
-        <span class="metaValue">Социально-бытовая</span>
-      </div>
-      <div>
-        <span class="metaLabel">Кратность</span>
-        <span class="metaValue">1 раз в неделю</span>
-      </div>
-      <div>
-        <span class="metaLabel">Длительность</span>
-        <span class="metaValue">10 минут</span>
-      </div>
-    </div>
-    <div class="important">
-      ${m.important}
-    </div>
-  </div>
-  <div class="actions">
-    <button class="openBtn" data-open="${m.id}">
-      Раскрыть инструкцию
-    </button>
-    <button class="copyBtn" data-copy="${m.id}">
-      Копия
-    </button>
-  </div>
-  <div class="details">
-    ${details}
-  </div>
-</article>`;<div><span class="metaLabel">Вид услуги</span><span class="metaValue">Социально-бытовая</span></div><div><span class="metaLabel">Кратность</span><span class="metaValue">1 раз в неделю</span></div><div><span class="metaLabel">Длительность</span><span class="metaValue">10 минут</span></div></div><h2>${m.title}</h2><div class="important">${m.important}</div></div><button class="fav" data-fav="${m.id}">${isFav?"★":"☆"}</button></div><div class="actions"><button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button><button class="copyBtn" data-copy="${m.id}">Копия</button></div><div class="details">${details}</div></article>`;}
-function renderList(targetId,list){
+     </article>`;}
+  function renderList(targetId,list){
   const el=document.getElementById(targetId);
   const arr=filteredMemos(list);
   el.innerHTML=arr.length?arr.map(memoCard).join(""):`<div class="empty">Ничего не найдено</div>`;}
@@ -182,8 +154,7 @@ function bindCards(){
       btn.textContent="Скопировано";
       setTimeout(()=>btn.textContent="Копия",1200);
     }catch(e){}
-  });
-}
+  });}
 function renderPages(){
   document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===state.page));
   document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.page===state.page));
