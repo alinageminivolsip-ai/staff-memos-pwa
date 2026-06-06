@@ -421,6 +421,39 @@
     min-width:76px;
     padding:7px 9px;
   }
+      .ruleSection{
+  background:#F9F8F4;
+  border-radius:16px;
+  padding:14px;
+  margin-top:14px;
+}
+.ruleHead{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+.ruleHead h3{
+  margin:0;
+  font-size:15px;
+  line-height:1.25;
+  font-weight:850;
+}
+.ruleArrow{
+  font-size:14px;
+  font-weight:900;
+  transition:.2s;
+}
+.ruleBody{
+  display:none;
+  margin-top:14px;
+}
+.ruleSection.open .ruleBody{
+  display:block;
+}
+.ruleSection.open .ruleArrow{
+  transform:rotate(90deg);
+}
 }
   </style>
 </head>
@@ -435,29 +468,35 @@
 <h2 style="margin-top:0">
 Общие правила работы
 </h2>
-<div class="section">
-<h3>Специфика общения с получателем социальной услуги</h3>
-<ul>
-<li>Общайтесь вежливо, учитывая коммуникативные особенности получателя социальных услуг.</li>
-<li>Отвечайте на вопросы спокойным тоном, не выдавая раздражение.</li>
-<li>Приводите объективные аргументы, в том числе обосновывающие правомерные отказы от совершения работником каких-либо действий.</li>
-<li>В случае нарушений слуха у получателя социальных услуг говорите умеренно громким голосом с активными движениями губ.</li>
-</ul>
+<div class="ruleSection">
+  <div class="ruleHead">
+    <span class="ruleArrow">▶</span>
+    <h3>Специфика общения с получателем социальной услуги</h3>
+  </div>
+  <div class="ruleBody">
+    <ul>
+      <li>Общайтесь вежливо, учитывая коммуникативные особенности получателя социальных услуг.</li>
+      <li>Отвечайте на вопросы спокойным тоном, не выдавая раздражение.</li>
+      <li>Приводите объективные аргументы, в том числе обосновывающие правомерные отказы от совершения работником каких-либо действий.</li>
+      <li>В случае нарушений слуха у получателя социальных услуг говорите умеренно громким голосом с активными движениями губ.</li>
+    </ul>
+  </div>
 </div>
-<div class="section">
-<h3>Особенности работы с лицами с инвалидностью</h3>
-<p>
-При предоставлении социальной услуги учитывайте способность получателя социальных услуг:
-</p>
-<ul>
-<li>к передвижению</li>
-<li>к коммуникации</li>
-<li>к ориентации в пространстве</li>
-<li>адекватно оценивать собственные действия</li>
-</ul>${m.image?`
-<p>
-Выстраивайте свои действия с соблюдением максимального уровня безопасности получателя социальных услуг.
-</p>
+<div class="ruleSection">
+  <div class="ruleHead">
+    <span class="ruleArrow">▶</span>
+    <h3>Особенности работы с лицами с инвалидностью</h3>
+  </div>
+  <div class="ruleBody">
+    <p>При предоставлении социальной услуги учитывайте способность получателя социальных услуг:</p>
+    <ul>
+      <li>к передвижению</li>
+      <li>к коммуникации</li>
+      <li>к ориентации в пространстве</li>
+      <li>адекватно оценивать собственные действия</li>
+    </ul>
+    <p>Выстраивайте свои действия с соблюдением максимального уровня безопасности получателя социальных услуг.</p>
+  </div>
 </div>
 </div>
 </section>
@@ -578,6 +617,9 @@ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
   document.querySelectorAll("[data-stage]").forEach(head=>head.onclick=()=>{
     head.closest(".stage").classList.toggle("open");
   });
+  document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
+  head.closest(".ruleSection").classList.toggle("open");
+});
 }
 function renderPages(){
   document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===state.page));
