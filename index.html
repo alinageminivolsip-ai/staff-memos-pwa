@@ -993,29 +993,6 @@ return `<article class="memo" id="memo-${m.id}">
     }
     groups[m.category].push(m);
   });
-  el.innerHTML=Object.entries(groups).map(([category,items])=>{
-    const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
-    return `
-      <section class="categoryGroup">
-        <div class="categoryTitle">
-          <h2>${category}</h2>
-          <span>${countText}</span>
-        </div>
-
-        <div class="memoScroller">
-          ${items.map(memoCard).join("")}
-        </div>
-      </section>
-    `;
-  }).join("");
-}
-  const groups={};
-  arr.forEach(m=>{
-    if(!groups[m.category]){
-      groups[m.category]=[];
-    }
-    groups[m.category].push(m);
-  });
   el.innerHTML=Object.entries(groups).map(([category,items],groupIndex)=>{
     const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
     return `
