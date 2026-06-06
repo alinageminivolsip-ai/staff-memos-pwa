@@ -560,11 +560,11 @@ function bindCards(){
     saveFavs();
     render();
   });
-  document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
-    const card=document.getElementById("memo-"+btn.dataset.open);
-    card.classList.toggle("open");
-    btn.textContent=card.classList.contains("open")?"Свернуть":"Раскрыть инструкцию";
-  });
+document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
+  const card=btn.closest(".memo");
+  card.classList.toggle("open");
+  btn.textContent=card.classList.contains("open")?"Свернуть":"Раскрыть инструкцию";
+});
   document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=async()=>{
     const id=Number(btn.dataset.copy);
     const m=MEMOS.find(x=>x.id===id);
