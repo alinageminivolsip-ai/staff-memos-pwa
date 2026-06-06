@@ -132,7 +132,23 @@
 .checkItem label{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:flex-start;cursor:pointer;}
 .checkItem input{appearance:none;-webkit-appearance:none;width:24px;height:24px;margin:2px 0 0 0;border:2px solid #C8C1B6;border-radius:8px;background:#fff;display:grid;place-content:center;flex:0 0 24px;}
 .checkItem input:checked{background:#FFCD00;border-color:#FFCD00;}
-.checkItem input:checked::after{content:"✓";color:#504D4A;font-size:18px;font-weight:900;line-height:1;}.checkItem input:checked + span{text-decoration:line-through;opacity:.55;}.checkItem input:checked + span{text-decoration:line-through;opacity:.6;}
+.checkItem input:checked::after{content:"✓";color:#504D4A;font-size:18px;font-weight:900;line-height:1;}
+    .checkItem input:checked + span{text-decoration:line-through;opacity:.55;}.checkItem input:checked + span{text-decoration:line-through;opacity:.6;}
+ #rulesPage .section{
+  margin-bottom:16px;
+}
+#rulesPage ul{
+  padding-left:20px;
+}
+#rulesPage li{
+  margin-bottom:10px;
+  line-height:1.45;
+}
+#rulesPage h3{
+  font-size:17px;
+  margin-bottom:12px;
+  font-weight:800;
+} 
   </style>
 </head>
 <body>
@@ -174,19 +190,7 @@
 </section>
     <section id="infoPage" class="page"><div class="infoCard"><h2 style="margin-top:0">Глоссарий</h2><div class="section"><h3>Б</h3><p><b>Биологические загрязнения</b> — рвотные, каловые массы, моча, гной, слизь.</p></div><div class="section"><h3>О</h3><p><b>Органические загрязнения</b> — продукты питания, жидкость (за исключением чистой воды).</p></div><div class="section"><h3>П</h3><p><b>Постельное белье</b> — комплект, состоящий из наволочки, пододеяльника и простыни.</p></div></div></section>#rulesPage .section{
   margin-bottom:16px;
-}
-#rulesPage ul{
-  padding-left:20px;
-}
-#rulesPage li{
-  margin-bottom:10px;
-  line-height:1.45;
-}
-#rulesPage h3{
-  font-size:17px;
-  margin-bottom:12px;
-  font-weight:800;
-}</main></div>
+</main></div>
 <nav class="bottom">
 <button class="navBtn active" data-page="homePage"><span>📝</span>Памятки</button>
 <button class="navBtn" data-page="favPage"><span>🌟</span>Избранное</button>
