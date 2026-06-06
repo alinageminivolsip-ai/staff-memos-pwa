@@ -217,6 +217,7 @@
   display:grid;
   gap:9px;
   max-width:48%;
+}
 .heroMetaItem{
   display:grid;
   gap:2px;
@@ -234,65 +235,87 @@
   font-weight:750;
 }
   @media (max-width:600px){
+  main{
+    padding:10px 12px 22px;
+  }
   .memoHead{
     padding:10px;
   }
-.heroBlock{
-  position:relative;
-  overflow:hidden;
-  border-radius:24px;
-}
+  .heroBlock{
+    position:relative;
+    overflow:hidden;
+    border-radius:22px;
+    height:360px;
+    margin-bottom:14px;
+  }
   .heroImage{
-    height:100%;
     width:100%;
+    height:100%;
     object-fit:cover;
-    object-position:relative;
+    object-position:88% center;
+    display:block;
   }
   .heroOverlay{
-    padding:24px 22px;
+    position:absolute;
+    inset:0;
+    padding:18px 18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:flex-start;
     background:linear-gradient(
       to right,
       rgba(255,255,255,.96) 0%,
-      rgba(255,255,255,.9) 48%,
-      rgba(255,255,255,.35) 72%,
+      rgba(255,255,255,.9) 46%,
+      rgba(255,255,255,.32) 70%,
       rgba(255,255,255,0) 100%
     );
   }
+  .heroOverlay .tag{
+    font-size:11px;
+    padding:5px 10px;
+    margin-bottom:0;
+  }
   .heroOverlay h2{
-    font-size:34px;
-    line-height:1.02;
-    max-width:58%;
-    margin:26px 0 26px;
+    font-size:24px;
+    line-height:1.04;
+    max-width:48%;
+    margin:22px 0 18px;
+    letter-spacing:-.035em;
   }
   .heroMeta{
-    max-width:56%;
-    gap:14px;
+    max-width:46%;
+    gap:8px;
+  }
+  .heroMetaItem{
+    gap:2px;
   }
   .heroMetaItem span{
-    font-size:14px;
+    font-size:10px;
+    line-height:1.1;
   }
   .heroMetaItem b{
-    font-size:20px;
+    font-size:13px;
     line-height:1.15;
+  }
+  .heroFav{
+    position:absolute;
+    top:14px;
+    right:14px;
+    z-index:999;
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    font-size:20px;
   }
   .actions{
     padding:0 10px 14px;
-}
-.heroMeta div{
-  line-height:1.25;
-}
-.heroFav{
-  position:absolute;
-  top:24px;
-  right:24px;
-  z-index:999;
-  width:52px;
-  height:52px;
-}
-.heroFav.active{
-  background:#FFCD00;
-  border-color:#FFCD00;
-}
+  }
+  .openBtn,
+  .copyBtn{
+    padding:11px 12px;
+    font-size:13px;
+  }
   </style>
 </head>
 <body>
