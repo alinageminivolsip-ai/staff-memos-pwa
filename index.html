@@ -233,6 +233,56 @@
   color:#504D4A;
   font-weight:750;
 }
+  @media (max-width:600px){
+  .memoHead{
+    padding:10px;
+  }
+  .heroBlock{
+    height:520px;
+    border-radius:20px;
+  }
+  .heroImage{
+    height:100%;
+    width:100%;
+    object-fit:cover;
+    object-position:relative;
+  }
+  .heroOverlay{
+    padding:24px 22px;
+    background:linear-gradient(
+      to right,
+      rgba(255,255,255,.96) 0%,
+      rgba(255,255,255,.9) 48%,
+      rgba(255,255,255,.35) 72%,
+      rgba(255,255,255,0) 100%
+    );
+  }
+  .heroOverlay h2{
+    font-size:34px;
+    line-height:1.02;
+    max-width:58%;
+    margin:26px 0 26px;
+  }
+  .heroMeta{
+    max-width:56%;
+    gap:14px;
+  }
+  .heroMetaItem span{
+    font-size:14px;
+  }
+  .heroMetaItem b{
+    font-size:20px;
+    line-height:1.15;
+  }
+.heroFav{
+  position:absolute;
+  top:20px;
+  right:20px;
+  z-index:20;
+}
+  .actions{
+    padding:0 10px 14px;
+}
 .heroMeta div{
   line-height:1.25;
 }
