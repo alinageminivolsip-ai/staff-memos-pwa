@@ -175,14 +175,6 @@
   font-weight:800;
   flex-shrink:0;
 }
-  .memoImage{
-  width:100%;
-  display:block;
-  border-radius:18px;
-  margin:14px 0 16px;
-  object-fit:cover;
-  max-height:260px;
-}
     .heroBlock{
   position:relative;
   overflow:hidden;
@@ -317,46 +309,25 @@ function memoCard(m){
       </div>
     </div>`;
   }).join("");
-  return `<article class="memo" id="memo-${m.id}">
-    <div class="memoHead">
-      <div class="memoTop">
-        <div class="tag">${m.category}</div>
-        <button class="fav" data-fav="${m.id}">${isFav?"★":"☆"}</button>
-      </div>
+return `<article class="memo" id="memo-${m.id}">
+  <div class="memoHead">
     <div class="heroBlock">
-  <img src="${m.image}" class="heroImage" alt="">
-  <div class="heroOverlay">
-    <div class="tag">${m.category}</div>
-    <h2>${m.title}</h2>
-    <div class="heroMeta">
-      <div>🕒 ${m.duration}</div>
-      <div>📅 ${m.frequency}</div>
-      <div>🧺 ${m.inventory}</div>
+      <img src="${m.image}" class="heroImage" alt="">
+      <button class="fav heroFav" data-fav="${m.id}">
+        ${isFav?"★":"☆"}
+      </button>
+      <div class="heroOverlay">
+        <div class="tag">${m.category}</div>
+        <h2>${m.title}</h2>
+        <div class="heroMeta">
+          <div>🕒 ${m.duration}</div>
+          <div>📅 ${m.frequency}</div>
+          <div>🧺 ${m.inventory}</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<div class="serviceMeta">
-  <div class="metaRow">
-    <div class="metaIcon">🕒</div>
-    <div class="metaText">
-      <span>Длительность:</span> ${m.duration}
-    </div>
-  </div>
-  <div class="metaRow">
-    <div class="metaIcon">📅</div>
-    <div class="metaText">
-      <span>Кратность:</span> ${m.frequency}
-    </div>
-  </div>
-  <div class="metaRow">
-    <div class="metaIcon">🧺</div>
-    <div class="metaText">
-      <span>Инвентарь:</span> ${m.inventory}
-    </div>
-  </div>
-</div>
-    </div>
-    <div class="actions">
+  <div class="actions">
       <button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button>
       <button class="copyBtn" data-copy="${m.id}">Копия</button>
     </div>
