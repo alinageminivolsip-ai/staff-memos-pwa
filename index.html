@@ -124,7 +124,7 @@
 .importantItem{position:relative;margin:10px 0;padding:12px 12px 12px 44px;border:1px solid #E1B1B1;border-radius:14px;background:#FFF7F7;line-height:1.35;font-weight:600;}
 .importantItem::before{content:"!";position:absolute;left:12px;top:12px;width:22px;height:22px;border-radius:50%;background:#C96A6A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;}
     .empty{text-align:center;padding:38px 20px;color:#77716B}.page{display:none}.page.active{display:block}.infoCard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-top:12px;line-height:1.45}
-    .bottom{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(730px,calc(100% - 26px));background:rgba(80,77,74,.96);border-radius:26px;padding:8px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;box-shadow:0 18px 40px rgba(0,0,0,.22);z-index:20}
+    .bottom{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(730px,calc(100% - 26px));background:rgba(80,77,74,.96);border-radius:26px;padding:8px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:7px;box-shadow:0 18px 40px rgba(0,0,0,.22);z-index:20}
     .navBtn{border:0;border-radius:20px;background:transparent;color:#fff;padding:11px 6px;font-weight:750;display:grid;gap:3px;place-items:center;font-size:12px}.navBtn span{font-size:20px;line-height:1}.navBtn.active{background:var(--yellow);color:var(--graphite)}
     .editHint{background:#fff;border:1px dashed #C9C2B5;border-radius:18px;padding:14px;margin-top:14px;color:#625D57;font-size:14px}
 .checkList{list-style:none;margin:0;padding:0;}
@@ -148,7 +148,33 @@
   font-size:17px;
   margin-bottom:12px;
   font-weight:800;
-} 
+}
+    .docCard{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:16px;
+  background:#F9F8F4;
+  border:1px solid #E9E5DC;
+  border-radius:16px;
+  margin-top:14px;
+}
+.docDesc{
+  font-size:13px;
+  color:#8A847D;
+  margin-top:4px;
+  line-height:1.35;
+}
+.downloadBtn{
+  background:#FFCD00;
+  color:#504D4A;
+  text-decoration:none;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:800;
+  flex-shrink:0;
+}
   </style>
 </head>
 <body>
@@ -188,12 +214,29 @@
 </div>
 </div>
 </section>
+    <section id="docsPage" class="page">
+  <div class="infoCard">
+    <h2 style="margin-top:0">Документы</h2>
+    <div class="docCard">
+      <div>
+        <b>Смена постельного белья</b>
+        <div class="docDesc">
+          Полная технологическая карта в формате Word
+        </div>
+      </div>
+      <a href="./docs/smena-postelnogo-belya.docx" download class="downloadBtn">
+        Скачать
+      </a>
+    </div>
+  </div>
+</section>
 <section id="infoPage" class="page"><div class="infoCard"><h2 style="margin-top:0">Глоссарий</h2><div class="section"><h3>Б</h3><p><b>Биологические загрязнения</b> — рвотные, каловые массы, моча, гной, слизь.</p></div><div class="section"><h3>О</h3><p><b>Органические загрязнения</b> — продукты питания, жидкость (за исключением чистой воды).</p></div><div class="section"><h3>П</h3><p><b>Постельное белье</b> — комплект, состоящий из наволочки, пододеяльника и простыни.</p></div></div></section></main></div>
 <nav class="bottom">
 <button class="navBtn active" data-page="homePage"><span>📝</span>Памятки</button>
 <button class="navBtn" data-page="favPage"><span>🌟</span>Избранное</button>
 <button class="navBtn" data-page="rulesPage"><span>📋</span>Правила</button>
 <button class="navBtn" data-page="infoPage"><span>📖</span>Глоссарий</button>
+<button class="navBtn" data-page="docsPage"><span>📁</span>Документы</button>
 </nav>
 <script>
 const MEMOS=[{id:1,title:"Смена постельного белья",category:"Социально-гигиенические",duration:"10 минут",frequency:"1 раз в неделю",inventory:"Постельное белье, емкость для грязного белья",important:"Важно помнить: не допускайте складок и неровностей на простыне. Следите, чтобы грязное белье не соприкасалось с чистым.",sections:[{title:"Разъяснение условий получения социальной услуги",time:"1 минута",items:["Обговорите условия оказания социальной услуги с получателем социальных услуг","Обсудите с получателем социальных услуг этапы и порядок смены постельного белья","Выберите с получателем социальных услуг комплект чистого постельного белья для замены грязного из имеющихся"]},{title:"Согласование хода выполнения социальной услуги",time:"1 минута",items:["Обговорите этапы выполнения социальной услуги","Получите согласие получателя социальных услуг на оказание социальной услуги, согласно ранее обговоренным условиям и этапам"]},{title:"Подготовка к смене белья",time:"2 минуты",items:["Помойте руки и вытрите насухо","Подготовьте постельное белье на смену и емкость для грязного белья","Убедитесь, что в кровати нет личных вещей получателя социальных услуг (телефона, слухового аппарата, зубных протезов). При наличии — уберите их в место, указанное получателем социальных услуг"]},{title:"Смена постельного белья продольным способом",time:"5 минут",items:["Подготовьте чистую простыню: скатайте валиком половину простыни по длинной стороне, отложите ее в сторону","Уберите одеяло, осторожно приподнимите голову получателя социальных услуг и уберите подушки","Поверните получателя социальных услуг на бок от себя","С освободившейся стороны постели скатайте простыню валиком к середине кровати (под получателя социальных услуг)","На освободившуюся часть кровати раскатайте подготовленную чистую простыню валиком к получателю социальных услуг","Разверните получателя социальных услуг на другой бок лицом к себе","Уберите грязную простыню с освободившейся части кровати и положите в емкость для грязного белья, раскатайте до конца чистую","Чистую простыню со всех сторон подверните под матрац так, чтобы не было складок","Уложите получателя социальных услуг на спину, подложите подушки в чистых наволочках","Поменяйте пододеяльник на одеяле, укройте получателя социальных услуг"]},{title:"Важно помнить",items:["<b>Если маломобильный получатель социальных услуг находится в функциональной кровати</b>, до начала смены постельного белья <b>опустите изголовье кровати</b>",
