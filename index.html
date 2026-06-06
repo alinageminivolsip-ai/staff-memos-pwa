@@ -1166,10 +1166,30 @@ function renderGlossary(){
     empty.style.display=visibleCount ? "none" : "block";
   }
 }
-  function renderPages(){
-  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===state.page));
-  document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.page===state.page));
-}function render(){
+function renderPages(){
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.toggle("active",p.id===state.page);
+  });
+
+  document.querySelectorAll(".navBtn").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===state.page);
+  });
+
+  const categoriesBox=document.querySelector(".collapseBox");
+
+  if(categoriesBox){
+    const hideCategories=[
+      "rulesPage",
+      "settingsPage",
+      "docsPage"
+    ];
+
+    categoriesBox.style.display=hideCategories.includes(state.page)
+      ? "none"
+      : "block";
+  }
+}
+  function render(){
   renderChips();
   document.getElementById("totalCount").textContent=MEMOS.length;
   document.getElementById("favCount").textContent=state.favs.length;
@@ -1179,39 +1199,16 @@ function renderGlossary(){
   renderPages();
   bindCards();
 }
-document.getElementById("search").addEventListener("input",e=>{state.search=e.target.value;render()});document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
-  state.page=btn.dataset.page;
-
-  const categoriesBox=document.querySelector(".collapseBox");
-
-  if(
-    state.page==="rulesPage" ||
-    state.page==="settingsPage"
-  ){
-    categoriesBox.style.display="none";
-  }else{
-    categoriesBox.style.display="block";
-  }
-
-  renderPages();
-   document.querySelectorAll(".page").forEach(p=>
-    p.classList.toggle("active",p.id===state.page)
-  );
-
-  document.querySelectorAll(".navBtn").forEach(b=>
-    b.classList.toggle("active",b.dataset.page===state.page)
-  );
-
-  const categoriesBox=document.querySelector(".collapseBox");
-
-  const hideCategories=[
-    "rulesPage",
-    "settingsPage",
-    "docsPage",
-    "infoPage"
-  ];
+document.getElementById("search").addEventListener("input",e=>{
+  state.search=e.target.value;
+  render();
 });
-let deferredPrompt;const installBtn=document.getElementById("installBtn");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display="block"});installBtn.addEventListener("click",async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt=null;installBtn.style.display="none"});if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"))}render();
+
+document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
+  state.page=btn.dataset.page;
+  renderPages();
+}); let deferredPrompt;
+  const installBtn=document.getElementById("installBtn");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display="block"});installBtn.addEventListener("click",async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt=null;installBtn.style.display="none"});if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"))}render();
 </script>
 </body>
 </html>
