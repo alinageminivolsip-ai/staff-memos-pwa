@@ -1108,12 +1108,13 @@ return `<article class="memo" id="memo-${m.id}">
     </div>
   </div>
 </div>
- <div class="actions">
+<div class="actions">
   <button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button>
   <button class="favAction ${isFav?"active":""}" data-fav="${m.id}">
     ${isFav?"★":"☆"}
   </button>
 </div>
+<div class="details">${details}</div>
   </article>`;
 }
  function renderList(targetId,list){
