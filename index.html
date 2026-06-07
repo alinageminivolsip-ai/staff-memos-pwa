@@ -603,348 +603,56 @@
     padding:7px 9px;
   }
 }
-   .categoryStack{
-  position:relative;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:24px;
-  box-shadow:0 14px 34px rgba(80,77,74,.12);
-  overflow:hidden;
-  margin:0 0 18px;
-  transition:margin .35s ease, box-shadow .35s ease, transform .35s ease;
+   .categoryGroup{
+  margin:0 0 28px;
 }
-
-.categoryStack.is-stacked{
-  margin-top:-34px;
-}
-
-.categoryStack.preview,
-.categoryStack.cards{
-  z-index:10;
+#favPage .categoryGroup{
   margin-top:0;
-  margin-bottom:28px;
-  box-shadow:0 20px 44px rgba(80,77,74,.16);
 }
-
-.categoryHead{
-  position:relative;
-  min-height:210px;
-  padding:22px 24px 68px;
-  cursor:pointer;
-  overflow:hidden;
-  transition:min-height .35s ease, padding .35s ease;
-}
-
-.categoryTop{
+    .categoryTitle{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
-  gap:14px;
-  position:relative;
-  z-index:3;
+  align-items:flex-end;
+  gap:12px;
+  margin:0 0 14px;
 }
-
-.categoryTop h2{
+.categoryTitle h2{
   margin:0;
-  max-width:62%;
-  font-size:22px;
-  line-height:1.08;
+  font-size:20px;
+  line-height:1.1;
   font-weight:850;
   letter-spacing:-.03em;
 }
-
-.categoryTop span{
-  font-size:16px;
-  color:#AAA5A0;
-  font-weight:850;
-  white-space:nowrap;
+.categoryTitle span{
+  font-size:13px;
+  color:#8A847D;
+  font-weight:700;
 }
-
-.categoryPreview{
-  position:relative;
-  z-index:3;
-  margin-top:28px;
-  max-width:48%;
-  opacity:0;
-  transform:translateY(8px);
-  pointer-events:none;
-  transition:.3s ease;
-}
-
-.categoryStack.preview .categoryPreview{
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-}
-
-.categoryPreview small{
-  display:block;
-  font-size:17px;
-  color:#B4AEA8;
-  margin-bottom:10px;
-}
-
-.categoryPreview b{
-  display:block;
-  font-size:18px;
-  line-height:1.08;
-  margin-bottom:10px;
-  font-weight:850;
-}
-
-.categoryImage{
-  position:absolute;
-  right:-28px;
-  bottom:10px;
-  width:54%;
-  height:170px;
-  object-fit:contain;
-  object-position:right bottom;
-  z-index:1;
-  opacity:.25;
-  transition:.35s ease;
-}
-
-.categoryStack.preview .categoryImage{
-  opacity:1;
-}
-
-.categoryOpenLabel{
-  position:absolute;
-  left:50%;
-  bottom:18px;
-  transform:translateX(-50%);
-  z-index:4;
-  border:0;
-  background:transparent;
-  color:var(--graphite);
-  font-size:20px;
-  font-weight:850;
+.memoScroller{
   display:flex;
-  align-items:center;
-  gap:12px;
-  white-space:nowrap;
-  opacity:0;
-  pointer-events:none;
-  transition:.3s ease;
-}
-
-.categoryStack.preview .categoryOpenLabel{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.categoryCards{
-  display:flex;
+  flex-direction:row;
   gap:16px;
   overflow-x:auto;
   overflow-y:hidden;
-  padding:0 24px;
-  max-height:0;
-  opacity:0;
-  transform:translateY(-14px);
-  pointer-events:none;
-  transition:max-height .45s ease, opacity .28s ease, transform .35s ease, padding .35s ease;
+  scroll-snap-type:x mandatory;
+ padding:2px 22px 20px 0;
   scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  width:100%;
 }
-
-.categoryCards::-webkit-scrollbar{
+.memoScroller::-webkit-scrollbar{
   display:none;
 }
-
-.categoryStack.cards .categoryCards{
-  max-height:390px;
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-  padding-bottom:24px;
-}
-
-.categoryStack.cards .categoryHead{
-  min-height:78px;
-  padding-bottom:18px;
-}
-
-.categoryStack.cards .categoryPreview,
-.categoryStack.cards .categoryImage,
-.categoryStack.cards .categoryOpenLabel{
-  opacity:0;
-  visibility:hidden;
-  height:0;
+.memoScroller .memo{
+  flex:0 0 86%;
+  min-width:86%;
+  max-width:520px;
+  scroll-snap-align:start;
   margin:0;
 }
-
-.miniMemo{
-  flex:0 0 47%;
-  min-width:47%;
-  height:310px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:20px;
-  box-shadow:0 10px 26px rgba(80,77,74,.12);
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
-
-.miniMemoBody{
-  position:relative;
-  height:250px;
-  padding:22px;
-  overflow:hidden;
-}
-
-.miniMemo h3{
-  margin:0 0 26px;
-  max-width:58%;
-  font-size:20px;
-  line-height:1.04;
-  font-weight:850;
-  letter-spacing:-.03em;
-  position:relative;
-  z-index:2;
-}
-
-.miniMeta{
-  display:grid;
-  gap:8px;
-  max-width:58%;
-  font-size:12px;
-  line-height:1.1;
-  color:#B4AEA8;
-  position:relative;
-  z-index:2;
-}
-
-.miniMeta b{
-  display:block;
-  color:var(--graphite);
-  font-size:12px;
-  line-height:1.15;
-  margin-top:3px;
-  font-weight:800;
-}
-
-.miniMemoImage{
-  position:absolute;
-  right:-34px;
-  bottom:0;
-  width:58%;
-  height:170px;
-  object-fit:contain;
-  object-position:right bottom;
-  z-index:1;
-}
-
-.miniOpenBtn{
-  width:100%;
-  height:60px;
-  border:0;
-  background:#fff;
-  border-top:1px solid var(--line);
-  color:var(--graphite);
-  font-size:19px;
-  font-weight:850;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  white-space:nowrap;
-}
-
-@media (max-width:600px){
-  .categoryStack{
-    border-radius:22px;
-  }
-
-  .categoryStack.is-stacked{
-    margin-top:-38px;
-  }
-
-  .categoryHead{
-    min-height:138px;
-    padding:16px 18px 54px;
-  }
-
-  .categoryStack.preview .categoryHead{
-    min-height:210px;
-    padding:20px 20px 66px;
-  }
-
-  .categoryTop h2{
-    max-width:58%;
-    font-size:19px;
-  }
-
-  .categoryStack.preview .categoryTop h2,
-  .categoryStack.cards .categoryTop h2{
-    font-size:22px;
-  }
-
-  .categoryTop span{
-    font-size:14px;
-  }
-
-  .categoryPreview{
-    margin-top:26px;
-    max-width:52%;
-  }
-
-  .categoryPreview small{
-    font-size:17px;
-  }
-
-  .categoryPreview b{
-    font-size:18px;
-  }
-
-  .categoryImage{
-    right:-34px;
-    bottom:8px;
-    width:58%;
-    height:165px;
-  }
-
-  .categoryOpenLabel{
-    font-size:19px;
-    bottom:18px;
-  }
-
-  .categoryCards{
-    gap:14px;
-    padding:0 18px;
-  }
-
-  .categoryStack.cards .categoryCards{
-    padding-bottom:20px;
-    max-height:380px;
-  }
-
-  .miniMemo{
-    flex:0 0 82%;
-    min-width:82%;
-    height:306px;
-  }
-
-  .miniMemoBody{
-    height:246px;
-    padding:20px;
-  }
-
-  .miniMemo h3{
-    font-size:20px;
-    max-width:58%;
-  }
-
-  .miniMemoImage{
-    right:-30px;
-    width:60%;
-    height:165px;
-  }
-
-  .miniOpenBtn{
-    height:60px;
-    font-size:19px;
+@media (min-width:760px){
+  .memoScroller .memo{
+    flex-basis:70%;
   }
 }
 .collapseBox{
@@ -1601,144 +1309,80 @@ return `<article class="memo" id="memo-${m.id}">
 <div class="details">${details}</div>
   </article>`;
 }
- function miniMemoCard(m){
-  return `
-    <article class="miniMemo">
-      <div class="miniMemoBody">
-        <h3>${m.title}</h3>
-
-        <div class="miniMeta">
-          <div>Длительность <b>${m.duration}</b></div>
-          <div>Кратность <b>${m.frequency}</b></div>
-          <div>Инвентарь <b>${m.inventory}</b></div>
-        </div>
-
-       <img class="miniMemoImage" src="${m.image}" alt="">
-      </div>
-
-      <button class="miniOpenBtn" data-open="${m.id}">
-        ▶ Раскрыть этапы
-      </button>
-    </article>
-  `;
-}
-
-function categoryPreview(items){
-  return items.slice(0,2).map(m=>`<b>${m.title}</b>`).join("") + "<b>и др...</b>";
-}
-function renderList(targetId,list){
+ function renderList(targetId,list){
   const el=document.getElementById(targetId);
   const arr=filteredMemos(list);
-
   if(!arr.length){
     el.innerHTML=`<div class="empty">Ничего не найдено</div>`;
     return;
   }
-
   const groups={};
-
   arr.forEach(m=>{
     if(!groups[m.category]){
       groups[m.category]=[];
     }
     groups[m.category].push(m);
   });
-
-  el.innerHTML=Object.entries(groups).map(([category,items],index)=>{
+  el.innerHTML=Object.entries(groups).map(([category,items])=>{
     const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
-    const cover=items[0];
-
     return `
-      <section class="categoryStack ${index>0 ? "is-stacked" : ""}">
-        <div class="categoryHead" data-category-toggle>
-          <div class="categoryTop">
-            <h2>${category}</h2>
-            <span>${countText}</span>
-          </div>
-
-          <div class="categoryPreview">
-            <small>Внутри</small>
-            ${categoryPreview(items)}
-          </div>
-
-          <img class="categoryImage" src="${cover.image}" alt="">
-
-          <button class="categoryOpenLabel" type="button">
-            ▶ Раскрыть карточки
-          </button>
+      <section class="categoryGroup">
+        <div class="categoryTitle">
+          <h2>${category}</h2>
+          <span>${countText}</span>
         </div>
 
-        <div class="categoryCards">
-          ${items.map(miniMemoCard).join("")}
+        <div class="memoScroller">
+          ${items.map(memoCard).join("")}
         </div>
       </section>
     `;
   }).join("");
 }
-
 function bindCards(){
-  document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
-    const id=Number(btn.dataset.fav);
+ document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
+  const id=Number(btn.dataset.fav);
+  state.favs=state.favs.includes(id)
+    ? state.favs.filter(x=>x!==id)
+    : [...state.favs,id];
 
-    state.favs=state.favs.includes(id)
-      ? state.favs.filter(x=>x!==id)
-      : [...state.favs,id];
+  saveFavs();
+  render();
+});
+document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
+  const id=Number(btn.dataset.open);
+  const card=btn.closest(".memo");
 
-    saveFavs();
-    render();
-  });
+  card.classList.toggle("open");
 
-  document.querySelectorAll("[data-category-toggle]").forEach(head=>{
-    head.onclick=()=>{
-      const current=head.closest(".categoryStack");
+  if(card.classList.contains("open") && !state.viewed.includes(id)){
+    state.viewed.push(id);
+    saveViewed();
+    renderProgress();
+  }
 
-      const isPreview=current.classList.contains("preview");
-      const isCards=current.classList.contains("cards");
+  btn.textContent=card.classList.contains("open") ? "Свернуть" : "Раскрыть инструкцию";
+});
 
-      document.querySelectorAll(".categoryStack").forEach(stack=>{
-        if(stack!==current){
-          stack.classList.remove("preview","cards");
-        }
-      });
-
-      if(!isPreview && !isCards){
-        current.classList.add("preview");
-        return;
-      }
-
-      if(isPreview){
-        current.classList.remove("preview");
-        current.classList.add("cards");
-        return;
-      }
-
-      if(isCards){
-        current.classList.remove("cards");
-      }
-    };
-  });
-
-  document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
-    const id=Number(btn.dataset.open);
-
-    if(!state.viewed.includes(id)){
-      state.viewed.push(id);
-      saveViewed();
-      renderProgress();
-    }
-  });
-
+document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=async()=>{
+    const id=Number(btn.dataset.copy);
+    const m=MEMOS.find(x=>x.id===id);
+    const text=`${m.title}\n\nВажно: ${m.important}\n\n`+m.sections.map(s=>`${s.title}\n- ${s.items.join("\n- ")}`).join("\n\n");
+    try{
+      await navigator.clipboard.writeText(text);
+      btn.textContent="Скопировано";
+      setTimeout(()=>btn.textContent="Копия",1200);
+    }catch(e){}
+   });
   document.querySelectorAll("[data-stage]").forEach(head=>head.onclick=()=>{
     head.closest(".stage").classList.toggle("open");
   });
-
-  document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
+   document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
     head.closest(".ruleSection").classList.toggle("open");
   });
-
   document.querySelectorAll("[data-collapse]").forEach(head=>head.onclick=()=>{
-    head.closest(".collapseBox").classList.toggle("open");
-  });
+  head.closest(".collapseBox").classList.toggle("open");
+});
 }
 function renderGlossary(){
   const items=document.querySelectorAll(".glossaryItem");
