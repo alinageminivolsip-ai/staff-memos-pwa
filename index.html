@@ -1725,9 +1725,24 @@ return `<article class="memo" id="memo-${m.id}">
   const el=document.getElementById(targetId);
   const arr=filteredMemos(list);
   if(!arr.length){
-    el.innerHTML=`<div class="empty">Ничего не найдено</div>`;
+
+  if(targetId==="favList"){
+    el.innerHTML=`
+      <div class="empty">
+        ❤️<br><br>
+        Здесь пока нет избранных памяток
+      </div>
+    `;
     return;
   }
+
+  el.innerHTML=`
+    <div class="empty">
+      Ничего не найдено
+    </div>
+  `;
+  return;
+}
   const groups={};
   arr.forEach(m=>{
     if(!groups[m.category]){
@@ -1836,10 +1851,11 @@ function renderProgress(){
 
   if(categoriesBox){
     const hideCategories=[
-      "rulesPage",
-      "settingsPage",
-      "docsPage"
-    ];
+  "favPage",
+  "rulesPage",
+  "settingsPage",
+  "docsPage"
+];
 
     categoriesBox.style.display=hideCategories.includes(state.page)
       ? "none"
@@ -1859,6 +1875,14 @@ if(favPageCount){
 renderGlossary();
 renderProgress();
 renderPages();
+   const problemBlock=document.querySelector(".problemBlock");
+
+if(problemBlock){
+  problemBlock.style.display =
+    state.page==="homePage"
+      ? "block"
+      : "none";
+}
 bindCards();
 }
 document.getElementById("search").addEventListener("input",e=>{
