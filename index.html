@@ -1333,6 +1333,21 @@ function renderChips(){const el=document.getElementById("chips");el.innerHTML=ca
   ${c}
 </button>
 `).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{state.category=btn.dataset.cat;render()})}
+  function getChipClass(category){
+  switch(category){
+    case "Социально-гигиенические":
+      return "chip-green";
+
+    case "Социально-бытовые":
+      return "chip-yellow";
+
+    case "Социально-медицинские":
+      return "chip-red";
+
+    default:
+      return "";
+  }
+}
 function getCategoryClass(category){
   switch(category){
     case "Социально-бытовые":
@@ -1531,23 +1546,8 @@ function renderProgress(){
       : "block";
   }
 }
-  function render(){
-  function getChipClass(category){
-  switch(category){
-    case "Социально-гигиенические":
-      return "chip-green";
-
-    case "Социально-бытовые":
-      return "chip-yellow";
-
-    case "Социально-медицинские":
-      return "chip-red";
-
-    default:
-      return "";
-  }
-}
-    renderChips();
+ function render(){
+  renderChips();
   document.getElementById("totalCount").textContent=MEMOS.length;
   document.getElementById("favCount").textContent=state.favs.length;
   renderList("memoList",MEMOS);
