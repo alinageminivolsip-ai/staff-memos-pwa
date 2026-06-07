@@ -1216,6 +1216,35 @@
   font-size:13px;
   line-height:1.35;
 }
+ .alphabetFilter{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:2px 0 14px;
+  margin-bottom:4px;
+  scrollbar-width:none;
+}
+
+.alphabetFilter::-webkit-scrollbar{
+  display:none;
+}
+
+.letterBtn{
+  min-width:42px;
+  height:42px;
+  border:1px solid #E9E5DC;
+  border-radius:14px;
+  background:#fff;
+  color:#504D4A;
+  font-size:15px;
+  font-weight:900;
+  box-shadow:0 5px 14px rgba(80,77,74,.05);
+}
+
+.letterBtn.active{
+  background:#FFCD00;
+  border-color:#FFCD00;
+}
   </style>
 </head>
 <body>
@@ -1507,7 +1536,16 @@
     <p class="pageBlockText">
       Краткие пояснения терминов, которые встречаются в технологических картах.
     </p>
-
+<div class="alphabetFilter" id="alphabetFilter">
+  <button class="letterBtn active" data-letter="Все">Все</button>
+  <button class="letterBtn" data-letter="Б">Б</button>
+  <button class="letterBtn" data-letter="Ж">Ж</button>
+  <button class="letterBtn" data-letter="К">К</button>
+  <button class="letterBtn" data-letter="О">О</button>
+  <button class="letterBtn" data-letter="П">П</button>
+  <button class="letterBtn" data-letter="Р">Р</button>
+  <button class="letterBtn" data-letter="Ч">Ч</button>
+</div>
     <div class="section glossaryItem" data-glossary-cat="Социально-гигиенические">
       <h3>Б</h3>
       <p><b>Биологические загрязнения</b> — рвотные, каловые массы, моча, гной, слизь.</p>
@@ -1746,7 +1784,8 @@ const state={
   category:"Все",
   favs:JSON.parse(localStorage.getItem("msp_favs")||"[]"),
   viewed:JSON.parse(localStorage.getItem("msp_viewed")||"[]"),
-  page:"homePage"
+  page:"homePage",
+  glossaryLetter:"Все"
 };
 const cats=["Все",...new Set(MEMOS.map(m=>m.category))];
 function saveFavs(){
@@ -1919,6 +1958,9 @@ function bindCards(){
    else{
   renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));
 }
+document.querySelectorAll("[data-letter]").forEach(btn=>btn.onclick=()=>{
+  state.glossaryLetter=btn.dataset.letter;
+  renderGlossary();
 });
 document.querySelectorAll(".heroBlock").forEach(block=>block.onclick=()=>{
   const card=block.closest(".memo");
@@ -1956,7 +1998,15 @@ function renderGlossary(){
 
   items.forEach(item=>{
     const itemCat=item.dataset.glossaryCat;
-    const show=state.category==="Все" || itemCat===state.category;
+    const itemLetter=item.querySelector("h3")?.textContent.trim();
+
+    const showByCategory =
+      state.category==="Все" || itemCat===state.category;
+
+    const showByLetter =
+      state.glossaryLetter==="Все" || itemLetter===state.glossaryLetter;
+
+    const show=showByCategory && showByLetter;
 
     item.style.display=show ? "block" : "none";
 
@@ -1964,6 +2014,15 @@ function renderGlossary(){
       visibleCount++;
     }
   });
+
+  document.querySelectorAll(".letterBtn").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.letter===state.glossaryLetter);
+  });
+
+  if(empty){
+    empty.style.display=visibleCount ? "none" : "block";
+  }
+}
 
   if(empty){
     empty.style.display=visibleCount ? "none" : "block";
@@ -2005,7 +2064,15 @@ function renderProgress(){
       ? "none"
       : "block";
   }
+const searchWrap=document.querySelector(".searchWrap");
+
+if(searchWrap){
+  searchWrap.style.display =
+    state.page==="rulesPage" || state.page==="settingsPage"
+      ? "none"
+      : "flex";
 }
+  }
  function render(){
   renderChips();
   document.getElementById("totalCount").textContent=MEMOS.length;
@@ -2039,6 +2106,7 @@ document.getElementById("search").addEventListener("input",e=>{
 document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
   state.page=btn.dataset.page;
   state.search="";
+  state.glossaryLetter="Все";
 
   const search=document.getElementById("search");
   search.value="";
