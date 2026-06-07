@@ -80,7 +80,30 @@
   align-items:center;
   justify-content:center;
 }
-    .tag{display:inline-flex;width:max-content;background:#FFF5BF;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800;margin-bottom:8px}
+    .tag{
+  display:inline-flex;
+  width:max-content;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+    
+.cat-yellow{
+  background:#FFF3B3;
+  color:#8A6700;
+}
+
+.cat-green{
+  background:#DDF4E4;
+  color:#23633A;
+}
+
+.cat-red{
+  background:#FCE3E3;
+  color:#A54545;
+}
 .serviceMeta{
   margin:18px 0;
   display:flex;
@@ -652,6 +675,17 @@
   font-size:13px;
   color:#8A847D;
   font-weight:700;
+}
+    .categoryTitle.cat-yellow h2{
+  color:#8A6700;
+}
+
+.categoryTitle.cat-green h2{
+  color:#23633A;
+}
+
+.categoryTitle.cat-red h2{
+  color:#A54545;
 }
 .memoScroller{
   display:flex;
@@ -1286,7 +1320,21 @@ function saveFavs(){
 }
 function filteredMemos(list=MEMOS){return list.filter(m=>{const q=state.search.toLowerCase();const text=(m.title+" "+m.category+" "+m.important+" "+m.sections.map(s=>s.items.join(" ")).join(" ")).toLowerCase();return(!q||text.includes(q))&&(state.category==="Все"||m.category===state.category)})}
 function renderChips(){const el=document.getElementById("chips");el.innerHTML=cats.map(c=>`<button class="chip ${c===state.category?'active':''}" data-cat="${c}">${c}</button>`).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{state.category=btn.dataset.cat;render()})}
-function memoCard(m){
+function getCategoryClass(category){
+  switch(category){
+    case "Социально-бытовые":
+      return "cat-yellow";
+
+    case "Социально-гигиенические":
+      return "cat-green";
+
+    case "Социально-медицинские":
+      return "cat-red";
+
+    default:
+      return "cat-yellow";
+  }
+  function memoCard(m){
   const isFav=state.favs.includes(m.id);
   const details=m.sections.map((s,sectionIndex)=>{
     const important=s.title.toLowerCase().includes("важно");
@@ -1311,7 +1359,7 @@ return `<article class="memo" id="memo-${m.id}">
  <div class="heroBlock">
   <img src="${m.image}" class="heroImage" alt="">
   <div class="heroOverlay">
-    <div class="tag">${m.category}</div>
+    <div class="tag ${getCategoryClass(m.category)}">${m.category}</div>
     <h2>${m.title}</h2>
     <div class="heroMeta">
       <div class="heroMetaItem">
@@ -1356,7 +1404,7 @@ return `<article class="memo" id="memo-${m.id}">
     const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
     return `
       <section class="categoryGroup">
-        <div class="categoryTitle">
+        <div class="categoryTitle ${getCategoryClass(category)}">
           <h2>${category}</h2>
           <span>${countText}</span>
         </div>
