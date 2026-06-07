@@ -1299,7 +1299,7 @@ function memoCard(m){
           <span class="stageArrow">▶</span>
           <div class="stageTitle">${s.title}</div>
         </div>
-        ${s.time?`<div class="stageTime">⏱ ${s.time}</div>`:""}
+        ${s.time?`<div class="stageTime">${s.time}</div>`:""}
       </div>
       <div class="stageBody">
         <ul class="${important?"importantList":"checkList"}">${listItems}</ul>
@@ -1316,15 +1316,15 @@ return `<article class="memo" id="memo-${m.id}">
     <div class="heroMeta">
       <div class="heroMetaItem">
         <span>Длительность</span>
-        <b>🕒 ${m.duration}</b>
+        <b>${m.duration}</b>
       </div>
       <div class="heroMetaItem">
         <span>Кратность оказания</span>
-        <b>📅 ${m.frequency}</b>
+        <b>${m.frequency}</b>
       </div>
       <div class="heroMetaItem">
         <span>Инвентарь</span>
-        <b>🧺 ${m.inventory}</b>
+        <b>${m.inventory}</b>
       </div>
     </div>
   </div>
