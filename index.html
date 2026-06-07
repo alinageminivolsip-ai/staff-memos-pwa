@@ -53,6 +53,23 @@
     main{
   padding:18px var(--page-x) 120px;
 }
+    .chip-green.active{
+  background:#DDF4E4;
+  border-color:#DDF4E4;
+  color:#23633A;
+}
+
+.chip-yellow.active{
+  background:#FFF3B3;
+  border-color:#FFF3B3;
+  color:#8A6700;
+}
+
+.chip-red.active{
+  background:#FCE3E3;
+  border-color:#FCE3E3;
+  color:#A54545;
+}
 .stats{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -1309,7 +1326,13 @@ function saveFavs(){
   localStorage.setItem("msp_viewed",JSON.stringify(state.viewed));
 }
 function filteredMemos(list=MEMOS){return list.filter(m=>{const q=state.search.toLowerCase();const text=(m.title+" "+m.category+" "+m.important+" "+m.sections.map(s=>s.items.join(" ")).join(" ")).toLowerCase();return(!q||text.includes(q))&&(state.category==="Все"||m.category===state.category)})}
-function renderChips(){const el=document.getElementById("chips");el.innerHTML=cats.map(c=>`<button class="chip ${c===state.category?'active':''}" data-cat="${c}">${c}</button>`).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{state.category=btn.dataset.cat;render()})}
+function renderChips(){const el=document.getElementById("chips");el.innerHTML=cats.map(c=>`
+<button
+  class="chip ${getChipClass(c)} ${c===state.category?'active':''}"
+  data-cat="${c}">
+  ${c}
+</button>
+`).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{state.category=btn.dataset.cat;render()})}
 function getCategoryClass(category){
   switch(category){
     case "Социально-бытовые":
@@ -1509,7 +1532,22 @@ function renderProgress(){
   }
 }
   function render(){
-  renderChips();
+  function getChipClass(category){
+  switch(category){
+    case "Социально-гигиенические":
+      return "chip-green";
+
+    case "Социально-бытовые":
+      return "chip-yellow";
+
+    case "Социально-медицинские":
+      return "chip-red";
+
+    default:
+      return "";
+  }
+}
+    renderChips();
   document.getElementById("totalCount").textContent=MEMOS.length;
   document.getElementById("favCount").textContent=state.favs.length;
   renderList("memoList",MEMOS);
