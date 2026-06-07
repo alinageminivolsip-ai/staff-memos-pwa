@@ -2019,6 +2019,8 @@ if(favPageCount){
 renderGlossary();
 renderProgress();
 renderPages();
+   updateSearchPlaceholder();
+filterCurrentPageContent();
    const problemBlock=document.querySelector(".problemBlock");
 
 if(problemBlock){
@@ -2032,11 +2034,17 @@ bindCards();
 document.getElementById("search").addEventListener("input",e=>{
   state.search=e.target.value;
   render();
+  filterCurrentPageContent();
 });
-
 document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
   state.page=btn.dataset.page;
-  renderPages();
+  state.search="";
+
+  const search=document.getElementById("search");
+  search.value="";
+  updateSearchPlaceholder();
+
+  render();
 
   window.scrollTo({
     top:0,
@@ -2118,7 +2126,37 @@ function startLoader(){
     }
   },130);
 }
+function updateSearchPlaceholder(){
+  const search=document.getElementById("search");
+  if(!search) return;
 
+  const placeholders={
+    homePage:"Найти памятку...",
+    favPage:"Найти в избранном...",
+    rulesPage:"Найти правило...",
+    infoPage:"Найти термин...",
+    docsPage:"Найти документ или видео...",
+    settingsPage:"Найти инструкцию по установке..."
+  };
+
+  search.placeholder=placeholders[state.page] || "Поиск...";
+}
+
+function filterCurrentPageContent(){
+  const q=state.search.toLowerCase().trim();
+
+  if(state.page==="rulesPage" || state.page==="settingsPage"){
+    document.querySelectorAll(`#${state.page} .ruleSection`).forEach(item=>{
+      item.style.display=item.textContent.toLowerCase().includes(q) ? "block" : "none";
+    });
+  }
+
+  if(state.page==="docsPage"){
+    document.querySelectorAll("#docsPage .docCard").forEach(item=>{
+      item.style.display=item.textContent.toLowerCase().includes(q) ? "flex" : "none";
+    });
+  }
+}
 render();
 startLoader();
 </script>
