@@ -1164,6 +1164,58 @@
   height:48px;
   min-height:48px;
 }
+  .installGuide{
+  display:grid;
+  gap:12px;
+  margin-top:14px;
+}
+
+.installStep{
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:12px;
+  align-items:start;
+  background:#fff;
+  border:1px solid #E9E5DC;
+  border-radius:18px;
+  padding:14px;
+  box-shadow:0 6px 16px rgba(80,77,74,.04);
+}
+
+.installNum{
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  background:#FFF3B3;
+  color:#504D4A;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:900;
+  flex-shrink:0;
+}
+
+.installText{
+  font-size:15px;
+  line-height:1.35;
+  color:#504D4A;
+}
+
+.installText b{
+  display:block;
+  font-size:15px;
+  line-height:1.25;
+  margin-bottom:4px;
+  font-weight:900;
+}
+
+.installText span{
+  display:block;
+  color:#77716B;
+  font-size:13px;
+  line-height:1.35;
+}
   </style>
 </head>
 <body>
@@ -1311,51 +1363,92 @@
       <h2>Помощь</h2>
       <span>установка</span>
     </div>
+
     <p class="pageBlockText">
-      Как установить приложение на смартфон.
+      Как добавить приложение на главный экран смартфона.
     </p>
+
     <div class="ruleSection">
       <div class="ruleHead">
         <span class="ruleArrow">▶</span>
-        <h3>Как установить на iPhone</h3>
+        <h3>Установка на iPhone</h3>
       </div>
+
       <div class="ruleBody">
-        <div class="installSteps">
+        <div class="installGuide">
           <div class="installStep">
-            <div class="installStepText">Откройте ссылку в браузере.</div>
+            <div class="installNum">1</div>
+            <div class="installText">
+              <b>Откройте ссылку в Safari</b>
+              <span>Лучше использовать стандартный браузер iPhone.</span>
+            </div>
           </div>
+
           <div class="installStep">
-            <img src="./install/share.png" alt="">
-            <div class="installStepText">Нажмите кнопку <b>«Поделиться»</b> внизу экрана.</div>
+            <div class="installNum">2</div>
+            <div class="installText">
+              <b>Нажмите «Поделиться»</b>
+              <span>Кнопка находится внизу экрана.</span>
+            </div>
           </div>
+
           <div class="installStep">
-            <div class="installStepText">Выберите пункт <b>«Добавить на экран «Домой»</b>.</div>
+            <div class="installNum">3</div>
+            <div class="installText">
+              <b>Выберите «На экран Домой»</b>
+              <span>Пункт может называться «Добавить на экран Домой».</span>
+            </div>
           </div>
+
           <div class="installStep">
-            <div class="installStepText">Нажмите <b>«Добавить»</b>.</div>
+            <div class="installNum">4</div>
+            <div class="installText">
+              <b>Нажмите «Добавить»</b>
+              <span>Иконка приложения появится на главном экране.</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="ruleSection">
       <div class="ruleHead">
         <span class="ruleArrow">▶</span>
-        <h3>Как установить на Android</h3>
+        <h3>Установка на Android</h3>
       </div>
+
       <div class="ruleBody">
-        <div class="installSteps">
+        <div class="installGuide">
           <div class="installStep">
-            <div class="installStepText">Откройте ссылку в браузере.</div>
+            <div class="installNum">1</div>
+            <div class="installText">
+              <b>Откройте ссылку в браузере</b>
+              <span>Например, в Chrome или Яндекс Браузере.</span>
+            </div>
           </div>
+
           <div class="installStep">
-            <img src="./install/dots.png" alt="">
-            <div class="installStepText">Нажмите на три точки в правом верхнем углу.</div>
+            <div class="installNum">2</div>
+            <div class="installText">
+              <b>Откройте меню браузера</b>
+              <span>Обычно это три точки в правом верхнем углу.</span>
+            </div>
           </div>
+
           <div class="installStep">
-            <div class="installStepText">Выберите <b>«Добавить на главный экран»</b> или <b>«Установить приложение»</b>.</div>
+            <div class="installNum">3</div>
+            <div class="installText">
+              <b>Выберите установку</b>
+              <span>Пункт может называться «Установить приложение» или «Добавить на главный экран».</span>
+            </div>
           </div>
+
           <div class="installStep">
-            <div class="installStepText">Подтвердите установку.</div>
+            <div class="installNum">4</div>
+            <div class="installText">
+              <b>Подтвердите действие</b>
+              <span>После этого приложение появится на экране телефона.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1797,13 +1890,32 @@ return `<article class="memo" id="memo-${m.id}">
 function bindCards(){
  document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=(e)=>{
   e.stopPropagation();
+
   const id=Number(btn.dataset.fav);
-  state.favs=state.favs.includes(id)
+  const isFav=state.favs.includes(id);
+
+  state.favs=isFav
     ? state.favs.filter(x=>x!==id)
     : [...state.favs,id];
 
   saveFavs();
-  render();
+
+  btn.classList.toggle("active", !isFav);
+  btn.textContent=!isFav ? "♥" : "♡";
+
+  const favCount=document.getElementById("favCount");
+  if(favCount){
+    favCount.textContent=state.favs.length;
+  }
+
+  const favPageCount=document.getElementById("favPageCount");
+  if(favPageCount){
+    favPageCount.textContent=`${state.favs.length} памяток`;
+  }
+
+  if(state.page==="favPage"){
+    render();
+  }
 });
 document.querySelectorAll(".heroBlock").forEach(block=>block.onclick=()=>{
   const card=block.closest(".memo");
