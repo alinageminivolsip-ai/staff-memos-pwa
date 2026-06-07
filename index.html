@@ -2029,6 +2029,20 @@ function renderGlossary(){
 }
 
 function renderProgress(){
+  const count=document.getElementById("progressCount");
+  const fill=document.getElementById("progressFill");
+
+  if(!count || !fill) return;
+
+  const total=MEMOS.length;
+  const viewed=state.viewed.filter(id=>MEMOS.some(m=>m.id===id)).length;
+  const percent=total ? Math.round((viewed / total) * 100) : 0;
+
+  count.textContent=`${viewed} из ${total}`;
+  fill.style.width=`${percent}%`;
+}
+
+function renderPages(){
   document.querySelectorAll(".page").forEach(p=>{
     p.classList.toggle("active",p.id===state.page);
   });
@@ -2041,25 +2055,26 @@ function renderProgress(){
 
   if(categoriesBox){
     const hideCategories=[
-  "favPage",
-  "rulesPage",
-  "settingsPage",
-  "docsPage"
-];
+      "favPage",
+      "rulesPage",
+      "settingsPage",
+      "docsPage"
+    ];
 
     categoriesBox.style.display=hideCategories.includes(state.page)
       ? "none"
       : "block";
   }
-const searchWrap=document.querySelector(".searchWrap");
 
-if(searchWrap){
-  searchWrap.style.display =
-    state.page==="rulesPage" || state.page==="settingsPage"
-      ? "none"
-      : "flex";
-}
+  const searchWrap=document.querySelector(".searchWrap");
+
+  if(searchWrap){
+    searchWrap.style.display =
+      state.page==="rulesPage" || state.page==="settingsPage"
+        ? "none"
+        : "flex";
   }
+}
  function render(){
   renderChips();
   document.getElementById("totalCount").textContent=MEMOS.length;
