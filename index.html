@@ -830,10 +830,6 @@
     min-width:78%;
   }
 }
-  .memoScroller .memo{
-    flex-basis:70%;
-  }
-}
 .collapseBox{
   margin:var(--gap-y) var(--page-x) 0;
   background:#fff;
@@ -1565,6 +1561,7 @@ function categoryPreview(items){
 function bindCards(){
   document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
     const id=Number(btn.dataset.fav);
+
     state.favs=state.favs.includes(id)
       ? state.favs.filter(x=>x!==id)
       : [...state.favs,id];
@@ -1589,49 +1586,35 @@ function bindCards(){
   });
 
   document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
-   .forEach(btn=>btn.onclick=()=>{
-  const id=Number(btn.dataset.fav);
-  state.favs=state.favs.includes(id)
-    ? state.favs.filter(x=>x!==id)
-    : [...state.favs,id];
+    const id=Number(btn.dataset.open);
 
-  saveFavs();
-  render();
-});
-document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
-  const id=Number(btn.dataset.open);
-  const card=btn.closest(".memo");
+    if(!state.viewed.includes(id)){
+      state.viewed.push(id);
+      saveViewed();
+      renderProgress();
+    }
 
-  card.classList.toggle("open");
+    const card=btn.closest(".memo");
 
-  if(card.classList.contains("open") && !state.viewed.includes(id)){
-    state.viewed.push(id);
-    saveViewed();
-    renderProgress();
-  }
+    if(card){
+      card.classList.toggle("open");
+      btn.textContent=card.classList.contains("open")
+        ? "Свернуть"
+        : "Раскрыть инструкцию";
+    }
+  });
 
-  btn.textContent=card.classList.contains("open") ? "Свернуть" : "Раскрыть инструкцию";
-});
-
-document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=async()=>{
-    const id=Number(btn.dataset.copy);
-    const m=MEMOS.find(x=>x.id===id);
-    const text=`${m.title}\n\nВажно: ${m.important}\n\n`+m.sections.map(s=>`${s.title}\n- ${s.items.join("\n- ")}`).join("\n\n");
-    try{
-      await navigator.clipboard.writeText(text);
-      btn.textContent="Скопировано";
-      setTimeout(()=>btn.textContent="Копия",1200);
-    }catch(e){}
-   });
   document.querySelectorAll("[data-stage]").forEach(head=>head.onclick=()=>{
     head.closest(".stage").classList.toggle("open");
   });
-   document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
+
+  document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
     head.closest(".ruleSection").classList.toggle("open");
   });
+
   document.querySelectorAll("[data-collapse]").forEach(head=>head.onclick=()=>{
-  head.closest(".collapseBox").classList.toggle("open");
-});
+    head.closest(".collapseBox").classList.toggle("open");
+  });
 }
 function renderGlossary(){
   const items=document.querySelectorAll(".glossaryItem");
