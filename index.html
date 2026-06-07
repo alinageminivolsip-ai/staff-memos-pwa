@@ -676,17 +676,7 @@
   color:#8A847D;
   font-weight:700;
 }
-    .categoryTitle.cat-yellow h2{
-  color:#8A6700;
-}
 
-.categoryTitle.cat-green h2{
-  color:#23633A;
-}
-
-.categoryTitle.cat-red h2{
-  color:#A54545;
-}
 .memoScroller{
   display:flex;
   flex-direction:row;
@@ -1405,7 +1395,7 @@ return `<article class="memo" id="memo-${m.id}">
     const countText=items.length===1 ? "1 памятка" : `${items.length} памятки`;
     return `
       <section class="categoryGroup">
-        <div class="categoryTitle ${getCategoryClass(category)}">
+        <div class="categoryTitle">
           <h2>${category}</h2>
           <span>${countText}</span>
         </div>
