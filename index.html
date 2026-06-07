@@ -357,6 +357,15 @@
   font-weight:800;
   flex-shrink:0;
 }
+    .videoBtn{
+  background:#DDF4E4;
+  color:#23633A;
+  text-decoration:none;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:800;
+  flex-shrink:0;
+}
 .heroBlock{
   position:relative;
   overflow:hidden;
@@ -1078,6 +1087,23 @@
     Скачать
   </a>
 </div>
+    <div class="infoCard">
+  <h2 style="margin-top:0">Видеоуроки</h2>
+
+  <div class="docCard">
+    <div>
+      <b>Видеоуроки по технологическим картам</b>
+    </div>
+
+    <a
+      href="https://disk.yandex.ru/d/RUgSlzpNahfdgA/110601"
+      target="_blank"
+      class="videoBtn">
+      Смотреть
+    </a>
+  </div>
+
+</div>
   </div>
 </section>
 <section id="infoPage" class="page">
@@ -1476,7 +1502,7 @@ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
   btn.textContent=card.classList.contains("open") ? "Свернуть" : "Раскрыть инструкцию";
 });
 
-document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=async()=>{
+  .forEach(btn=>btn.onclick=async()=>{
     const id=Number(btn.dataset.copy);
     const m=MEMOS.find(x=>x.id===id);
     const text=`${m.title}\n\nВажно: ${m.important}\n\n`+m.sections.map(s=>`${s.title}\n- ${s.items.join("\n- ")}`).join("\n\n");
@@ -1600,13 +1626,12 @@ const LOADING_TEXTS=[
   "Каждое посещение важно",
   "Ваша помощь имеет большое значение",
   "Забота начинается с внимания",
-  "Спасибо за ежедневную поддержку москвичей серебрянного возраста",
+  "Спасибо за ежедневную поддержку москвичей серебряного возраста",
   "Добрые дела складываются в большие результаты",
   "Тепло начинается с простого участия",
-  "Каждый Ваш визит делает жизнь лучше"
-  "Больше, чем забота"
-  "Забота начинается с нас"
-  "Забота начинается с внимания"
+  "Каждый Ваш визит делает жизнь лучше",
+  "Больше, чем забота",
+  "Забота начинается с нас",
   "Вас очень ждут и скучают"
 ];
 
