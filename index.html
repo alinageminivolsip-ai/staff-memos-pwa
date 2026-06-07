@@ -1916,6 +1916,9 @@ function bindCards(){
   if(state.page==="favPage"){
     render();
   }
+   else{
+  renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));
+}
 });
 document.querySelectorAll(".heroBlock").forEach(block=>block.onclick=()=>{
   const card=block.closest(".memo");
