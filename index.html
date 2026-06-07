@@ -618,7 +618,8 @@
   margin-top:-34px;
 }
 
-.categoryStack.open{
+.categoryStack.preview,
+.categoryStack.cards{
   z-index:10;
   margin-top:0;
   margin-bottom:28px;
@@ -631,6 +632,7 @@
   padding:22px 24px 68px;
   cursor:pointer;
   overflow:hidden;
+  transition:min-height .35s ease, padding .35s ease;
 }
 
 .categoryTop{
@@ -663,6 +665,16 @@
   z-index:3;
   margin-top:28px;
   max-width:48%;
+  opacity:0;
+  transform:translateY(8px);
+  pointer-events:none;
+  transition:.3s ease;
+}
+
+.categoryStack.preview .categoryPreview{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
 }
 
 .categoryPreview small{
@@ -689,6 +701,12 @@
   object-fit:contain;
   object-position:right bottom;
   z-index:1;
+  opacity:.25;
+  transition:.35s ease;
+}
+
+.categoryStack.preview .categoryImage{
+  opacity:1;
 }
 
 .categoryOpenLabel{
@@ -706,6 +724,14 @@
   align-items:center;
   gap:12px;
   white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s ease;
+}
+
+.categoryStack.preview .categoryOpenLabel{
+  opacity:1;
+  pointer-events:auto;
 }
 
 .categoryCards{
@@ -726,7 +752,7 @@
   display:none;
 }
 
-.categoryStack.open .categoryCards{
+.categoryStack.cards .categoryCards{
   max-height:390px;
   opacity:1;
   transform:translateY(0);
@@ -734,14 +760,14 @@
   padding-bottom:24px;
 }
 
-.categoryStack.open .categoryHead{
+.categoryStack.cards .categoryHead{
   min-height:78px;
   padding-bottom:18px;
 }
 
-.categoryStack.open .categoryPreview,
-.categoryStack.open .categoryImage,
-.categoryStack.open .categoryOpenLabel{
+.categoryStack.cards .categoryPreview,
+.categoryStack.cards .categoryImage,
+.categoryStack.cards .categoryOpenLabel{
   opacity:0;
   visibility:hidden;
   height:0;
@@ -799,7 +825,7 @@
   font-weight:800;
 }
 
-.miniMemo img{
+.miniMemoImage{
   position:absolute;
   right:-34px;
   bottom:0;
@@ -832,21 +858,31 @@
   }
 
   .categoryStack.is-stacked{
-    margin-top:-26px;
+    margin-top:-38px;
   }
 
   .categoryHead{
+    min-height:138px;
+    padding:16px 18px 54px;
+  }
+
+  .categoryStack.preview .categoryHead{
     min-height:210px;
     padding:20px 20px 66px;
   }
 
   .categoryTop h2{
     max-width:58%;
+    font-size:19px;
+  }
+
+  .categoryStack.preview .categoryTop h2,
+  .categoryStack.cards .categoryTop h2{
     font-size:22px;
   }
 
   .categoryTop span{
-    font-size:16px;
+    font-size:14px;
   }
 
   .categoryPreview{
@@ -879,7 +915,7 @@
     padding:0 18px;
   }
 
-  .categoryStack.open .categoryCards{
+  .categoryStack.cards .categoryCards{
     padding-bottom:20px;
     max-height:380px;
   }
@@ -900,7 +936,7 @@
     max-width:58%;
   }
 
-  .miniMemo img{
+  .miniMemoImage{
     right:-30px;
     width:60%;
     height:165px;
@@ -909,33 +945,6 @@
   .miniOpenBtn{
     height:60px;
     font-size:19px;
-  }
-}
-@media (max-width:600px){
-  .categoryStack.is-stacked{
-    margin-top:-38px;
-  }
-
-  .categoryHead{
-    min-height:138px;
-    padding:16px 18px 54px;
-  }
-
-  .categoryTop h2{
-    font-size:19px;
-  }
-
-  .categoryTop span{
-    font-size:14px;
-  }
-
-  .categoryPreview b{
-    font-size:16px;
-  }
-
-  .miniMemo{
-    flex-basis:78%;
-    min-width:78%;
   }
 }
 .collapseBox{
@@ -1617,7 +1626,7 @@ return `<article class="memo" id="memo-${m.id}">
 function categoryPreview(items){
   return items.slice(0,2).map(m=>`<b>${m.title}</b>`).join("") + "<b>и др...</b>";
 }
-  function renderList(targetId,list){
+function renderList(targetId,list){
   const el=document.getElementById(targetId);
   const arr=filteredMemos(list);
 
@@ -1666,6 +1675,7 @@ function categoryPreview(items){
     `;
   }).join("");
 }
+
 function bindCards(){
   document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
     const id=Number(btn.dataset.fav);
@@ -1681,15 +1691,30 @@ function bindCards(){
   document.querySelectorAll("[data-category-toggle]").forEach(head=>{
     head.onclick=()=>{
       const current=head.closest(".categoryStack");
-      const wasOpen=current.classList.contains("open");
 
-      document.querySelectorAll(".categoryStack.open").forEach(stack=>{
+      const isPreview=current.classList.contains("preview");
+      const isCards=current.classList.contains("cards");
+
+      document.querySelectorAll(".categoryStack").forEach(stack=>{
         if(stack!==current){
-          stack.classList.remove("open");
+          stack.classList.remove("preview","cards");
         }
       });
 
-      current.classList.toggle("open", !wasOpen);
+      if(!isPreview && !isCards){
+        current.classList.add("preview");
+        return;
+      }
+
+      if(isPreview){
+        current.classList.remove("preview");
+        current.classList.add("cards");
+        return;
+      }
+
+      if(isCards){
+        current.classList.remove("cards");
+      }
     };
   });
 
@@ -1700,15 +1725,6 @@ function bindCards(){
       state.viewed.push(id);
       saveViewed();
       renderProgress();
-    }
-
-    const card=btn.closest(".memo");
-
-    if(card){
-      card.classList.toggle("open");
-      btn.textContent=card.classList.contains("open")
-        ? "Свернуть"
-        : "Раскрыть инструкцию";
     }
   });
 
