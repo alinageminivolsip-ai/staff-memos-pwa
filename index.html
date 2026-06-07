@@ -1101,6 +1101,46 @@
   background:#FFCD00;
   border-color:#FFCD00;
 }
+ .pageBlock{
+  background:#fff;
+  border:1px solid #E9E5DC;
+  border-radius:24px;
+  box-shadow:0 10px 26px rgba(80,77,74,.06);
+  padding:18px;
+  margin:0 0 var(--gap-y);
+}
+
+.pageBlockHead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 0 16px;
+}
+
+.pageBlockHead h2{
+  margin:0;
+  font-size:22px;
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-.03em;
+  color:#504D4A;
+}
+
+.pageBlockHead span{
+  font-size:13px;
+  line-height:1.2;
+  color:#8A847D;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.pageBlockText{
+  margin:0 0 14px;
+  font-size:15px;
+  line-height:1.35;
+  color:#77716B;
+}
   </style>
 </head>
 <body>
@@ -1189,12 +1229,17 @@
 
 <div id="memoList"></div>
 </section>
-    <section id="favPage" class="page">
-  <div class="pageIntro">
-    <h2>Избранное</h2>
-    <p>Памятки, которые Вы добавили и используете чаще всего.</p>
+   <section id="favPage" class="page">
+  <div class="pageBlock">
+    <div class="pageBlockHead">
+      <h2>Избранное</h2>
+      <span id="favPageCount">0 памяток</span>
+    </div>
+    <p class="pageBlockText">
+      Памятки, которые Вы добавили и используете чаще всего.
+    </p>
+    <div id="favList"></div>
   </div>
-  <div id="favList"></div>
 </section>
 <section id="rulesPage" class="page">
   <div class="infoCard">
@@ -1783,6 +1828,10 @@ function renderProgress(){
   renderChips();
   document.getElementById("totalCount").textContent=MEMOS.length;
   document.getElementById("favCount").textContent=state.favs.length;
+   const favPageCount=document.getElementById("favPageCount");
+if(favPageCount){
+  favPageCount.textContent=`${state.favs.length} памяток`;
+}
   renderList("memoList",MEMOS);
   renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));
 renderGlossary();
@@ -1798,6 +1847,11 @@ document.getElementById("search").addEventListener("input",e=>{
 document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
   state.page=btn.dataset.page;
   renderPages();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 });
 
 let deferredPrompt;
