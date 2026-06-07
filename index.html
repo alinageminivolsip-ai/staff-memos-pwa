@@ -1712,12 +1712,14 @@ return `<article class="memo" id="memo-${m.id}">
 </div>
     </div>
   </div>
+  <div class="actions">
+    <button class="favAction ${isFav?"active":""}" data-fav="${m.id}">
+      ${isFav?"♥":"♡"}
+    </button>
+  </div>
 </div>
-<div class="actions">
-<button class="favAction ${isFav?"active":""}" data-fav="${m.id}">
-  ${isFav?"♥":"♡"}
-</button>
-</div>
+
+<div class="details">${details}</div>
 <div class="details">${details}</div>
   </article>`;
 }
@@ -1767,7 +1769,8 @@ return `<article class="memo" id="memo-${m.id}">
   }).join("");
 }
 function bindCards(){
- document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=()=>{
+ document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=(e)=>{
+  e.stopPropagation();
   const id=Number(btn.dataset.fav);
   state.favs=state.favs.includes(id)
     ? state.favs.filter(x=>x!==id)
