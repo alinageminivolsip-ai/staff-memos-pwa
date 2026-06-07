@@ -1927,69 +1927,73 @@ return `<article class="memo" id="memo-${m.id}">
   }).join("");
 }
 function bindCards(){
- document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=(e)=>{
-  e.stopPropagation();
+  document.querySelectorAll("[data-fav]").forEach(btn=>btn.onclick=(e)=>{
+    e.stopPropagation();
 
-  const id=Number(btn.dataset.fav);
-  const isFav=state.favs.includes(id);
+    const id=Number(btn.dataset.fav);
+    const isFav=state.favs.includes(id);
 
-  state.favs=isFav
-    ? state.favs.filter(x=>x!==id)
-    : [...state.favs,id];
+    state.favs=isFav
+      ? state.favs.filter(x=>x!==id)
+      : [...state.favs,id];
 
-  saveFavs();
+    saveFavs();
 
-  btn.classList.toggle("active", !isFav);
-  btn.textContent=!isFav ? "♥" : "♡";
+    btn.classList.toggle("active", !isFav);
+    btn.textContent=!isFav ? "♥" : "♡";
 
-  const favCount=document.getElementById("favCount");
-  if(favCount){
-    favCount.textContent=state.favs.length;
-  }
+    const favCount=document.getElementById("favCount");
+    if(favCount){
+      favCount.textContent=state.favs.length;
+    }
 
-  const favPageCount=document.getElementById("favPageCount");
-  if(favPageCount){
-    favPageCount.textContent=`${state.favs.length} памяток`;
-  }
+    const favPageCount=document.getElementById("favPageCount");
+    if(favPageCount){
+      favPageCount.textContent=`${state.favs.length} памяток`;
+    }
 
-  if(state.page==="favPage"){
-    render();
-  }
-   else{
-  renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));
-}
-document.querySelectorAll("[data-letter]").forEach(btn=>btn.onclick=()=>{
-  state.glossaryLetter=btn.dataset.letter;
-  renderGlossary();
-});
-document.querySelectorAll(".heroBlock").forEach(block=>block.onclick=()=>{
-  const card=block.closest(".memo");
-  const id=Number(card.id.replace("memo-",""));
+    renderList("favList",MEMOS.filter(m=>state.favs.includes(m.id)));
 
-  card.classList.toggle("open");
+    if(state.page==="favPage"){
+      render();
+    }
+  });
 
-  if(card.classList.contains("open") && !state.viewed.includes(id)){
-    state.viewed.push(id);
-    saveViewed();
-    renderProgress();
-  }
-});
+  document.querySelectorAll(".heroBlock").forEach(block=>block.onclick=()=>{
+    const card=block.closest(".memo");
+    const id=Number(card.id.replace("memo-",""));
+
+    card.classList.toggle("open");
+
+    if(card.classList.contains("open") && !state.viewed.includes(id)){
+      state.viewed.push(id);
+      saveViewed();
+      renderProgress();
+    }
+  });
 
   document.querySelectorAll("[data-stage]").forEach(head=>head.onclick=()=>{
     head.closest(".stage").classList.toggle("open");
   });
-   document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
+
+  document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
     head.closest(".ruleSection").classList.toggle("open");
   });
- document.querySelectorAll("[data-collapse]").forEach(head=>head.onclick=()=>{
-  head.closest(".collapseBox").classList.toggle("open");
-});
 
-document.querySelectorAll("[data-problem]").forEach(btn=>btn.onclick=()=>{
-  state.search=btn.dataset.problem;
-  document.getElementById("search").value=state.search;
-  render();
-});
+  document.querySelectorAll("[data-collapse]").forEach(head=>head.onclick=()=>{
+    head.closest(".collapseBox").classList.toggle("open");
+  });
+
+  document.querySelectorAll("[data-problem]").forEach(btn=>btn.onclick=()=>{
+    state.search=btn.dataset.problem;
+    document.getElementById("search").value=state.search;
+    render();
+  });
+
+  document.querySelectorAll("[data-letter]").forEach(btn=>btn.onclick=()=>{
+    state.glossaryLetter=btn.dataset.letter;
+    renderGlossary();
+  });
 }
 function renderGlossary(){
   const items=document.querySelectorAll(".glossaryItem");
@@ -2019,15 +2023,6 @@ function renderGlossary(){
     btn.classList.toggle("active",btn.dataset.letter===state.glossaryLetter);
   });
 
-  if(empty){
-    empty.style.display=visibleCount ? "none" : "block";
-  }
-}
-
-  if(empty){
-    empty.style.display=visibleCount ? "none" : "block";
-  }
-}
 function renderProgress(){
   const count=document.getElementById("progressCount");
   const fill=document.getElementById("progressFill");
