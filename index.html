@@ -2023,20 +2023,12 @@ function renderGlossary(){
     btn.classList.toggle("active",btn.dataset.letter===state.glossaryLetter);
   });
 
-function renderProgress(){
-  const count=document.getElementById("progressCount");
-  const fill=document.getElementById("progressFill");
-
-  if(!count || !fill) return;
-
-  const total=MEMOS.length;
-  const viewed=state.viewed.filter(id=>MEMOS.some(m=>m.id===id)).length;
-  const percent=total ? Math.round((viewed / total) * 100) : 0;
-
-  count.textContent=`${viewed} из ${total}`;
-  fill.style.width=`${percent}%`;
+  if(empty){
+    empty.style.display=visibleCount ? "none" : "block";
+  }
 }
-  function renderPages(){
+
+function renderProgress(){
   document.querySelectorAll(".page").forEach(p=>{
     p.classList.toggle("active",p.id===state.page);
   });
