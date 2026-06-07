@@ -1502,16 +1502,6 @@ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
   btn.textContent=card.classList.contains("open") ? "Свернуть" : "Раскрыть инструкцию";
 });
 
-  .forEach(btn=>btn.onclick=async()=>{
-    const id=Number(btn.dataset.copy);
-    const m=MEMOS.find(x=>x.id===id);
-    const text=`${m.title}\n\nВажно: ${m.important}\n\n`+m.sections.map(s=>`${s.title}\n- ${s.items.join("\n- ")}`).join("\n\n");
-    try{
-      await navigator.clipboard.writeText(text);
-      btn.textContent="Скопировано";
-      setTimeout(()=>btn.textContent="Копия",1200);
-    }catch(e){}
-   });
   document.querySelectorAll("[data-stage]").forEach(head=>head.onclick=()=>{
     head.closest(".stage").classList.toggle("open");
   });
