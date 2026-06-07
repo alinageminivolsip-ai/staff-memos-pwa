@@ -206,36 +206,6 @@
   gap:10px;
   padding:0 16px 16px;
 }
-
-.openBtn,
-.favAction{
-  border:0;
-  border-radius:15px;
-  padding:12px 14px;
-  font-weight:800;
-  font-size:14px;
-  min-height:48px;
-}
-
-.openBtn{
-  background:var(--graphite);
-  color:#fff;
-  flex:1;
-}
-
-.favAction{
-  width:64px;
-  background:#F1EEE6;
-  color:var(--graphite);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-}
-
-.favAction.active{
-  background:var(--yellow);
-}
     .details{display:none;border-top:1px solid var(--line);padding:0 16px 16px}.memo.open .details{display:block}.section{margin-top:14px;background:#F9F8F4;border-radius:16px;padding:14px}.section h3{margin:0 0 8px;font-size:15px}.section ul{margin:0;padding-left:20px}.section li{margin:6px 0;line-height:1.35}
     .stage{margin-top:14px;background:#F9F8F4;border-radius:16px;padding:14px}
 .stageHead{
@@ -1098,8 +1068,9 @@
 }
 
 .favAction.active{
-  background:#FFCD00;
-  border-color:#FFCD00;
+  background:#FFF1F1;
+  border-color:#F2C9C9;
+  color:#D64F4F;
 }
  .pageBlock{
   background:#fff;
@@ -1140,6 +1111,32 @@
   font-size:15px;
   line-height:1.35;
   color:#77716B;
+}
+    .favAction{
+  width:54px;
+  height:54px;
+  min-height:54px;
+  padding:0;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid #E9E5DC;
+  box-shadow:0 8px 18px rgba(80,77,74,.14);
+  color:#CFC7BD;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  line-height:1;
+}
+
+.favAction.active{
+  background:#FFF1F1;
+  border-color:#F2C9C9;
+  color:#D64F4F;
+}
+
+.favAction:active{
+  transform:scale(.94);
 }
   </style>
 </head>
@@ -1242,8 +1239,14 @@
   </div>
 </section>
 <section id="rulesPage" class="page">
-  <div class="infoCard">
-    <h2 style="margin-top:0">Общие правила работы</h2>
+  <div class="pageBlock">
+    <div class="pageBlockHead">
+      <h2>Правила</h2>
+      <span>2 раздела</span>
+    </div>
+    <p class="pageBlockText">
+      Основные правила общения и безопасной работы с получателями социальных услуг.
+    </p>
    <div class="ruleSection">
   <div class="ruleHead">
     <span class="ruleArrow">▶</span>
@@ -1277,8 +1280,14 @@
   </div>
 </section>
   <section id="settingsPage" class="page">
-  <div class="infoCard">
-    <h2 style="margin-top:0">Помощь</h2>
+  <div class="pageBlock">
+    <div class="pageBlockHead">
+      <h2>Помощь</h2>
+      <span>установка</span>
+    </div>
+    <p class="pageBlockText">
+      Как установить приложение на смартфон.
+    </p>
     <div class="ruleSection">
       <div class="ruleHead">
         <span class="ruleArrow">▶</span>
@@ -1329,11 +1338,14 @@
 </section>
 <section id="docsPage" class="page">
 
-  <div class="infoCard">
-    <div class="categoryTitle">
-      <h2>Документы</h2>
-      <span>2 документа</span>
-    </div>
+  <div class="pageBlock">
+   <div class="pageBlockHead">
+  <h2>Документы</h2>
+  <span>2 документа</span>
+</div>
+<p class="pageBlockText">
+  Полные технологические карты для скачивания.
+</p>
 
     <div class="docCard">
       <div>
@@ -1352,8 +1364,10 @@
     </div>
   </div>
 
-  <div class="infoCard">
-    <h2 style="margin-top:0">Видеоуроки</h2>
+ <div class="pageBlock">
+    <div class="pageBlockHead">
+      <h2>Видеоуроки</h2>
+    </div>
 
     <div class="docCard">
       <div>
@@ -1366,8 +1380,14 @@
 
 </section>
 <section id="infoPage" class="page">
-  <div class="infoCard">
-    <h2 style="margin-top:0">Глоссарий</h2>
+  <div class="pageBlock">
+    <div class="pageBlockHead">
+      <h2>Глоссарий</h2>
+      <span>термины</span>
+    </div>
+    <p class="pageBlockText">
+      Краткие пояснения терминов, которые встречаются в технологических картах.
+    </p>
 
     <div class="section glossaryItem" data-glossary-cat="Социально-гигиенические">
       <h3>Б</h3>
@@ -1694,7 +1714,9 @@ return `<article class="memo" id="memo-${m.id}">
   </div>
 </div>
 <div class="actions">
-  <button class="openBtn" data-open="${m.id}">Раскрыть инструкцию</button>
+<button class="favAction ${isFav?"active":""}" data-fav="${m.id}">
+  ${isFav?"♥":"♡"}
+</button>
 </div>
 <div class="details">${details}</div>
   </article>`;
