@@ -41,15 +41,56 @@
     h1{font-size:24px;line-height:1.05;margin:0;font-weight:850;letter-spacing:-.03em}.subtitle{font-size:13px;color:#77716B;margin-top:4px}
     .searchWrap{margin-top:14px;display:flex;gap:10px}.search{width:100%;border:1px solid var(--line);background:#fff;border-radius:18px;padding:14px 16px;font-size:16px;outline:none;color:var(--graphite);box-shadow:0 7px 20px rgba(80,77,74,.06)}
     .installBtn{border:0;background:var(--graphite);color:#fff;border-radius:18px;padding:0 15px;font-weight:750;font-size:14px;display:none}
-    .chips{
+   .chips{
   display:flex;
   gap:10px;
   overflow-x:auto;
-  padding:0 20px;
+  padding:0 18px 18px;
   scrollbar-width:none;
-}.chips::-webkit-scrollbar{display:none}
-    .chip{border:1px solid var(--line);background:#fff;color:var(--graphite);border-radius:999px;padding:10px 14px;white-space:nowrap;font-size:14px;font-weight:700;box-shadow:0 6px 14px rgba(80,77,74,.05)}
-    .chip.active{background:var(--yellow);border-color:var(--yellow)}
+  -webkit-overflow-scrolling:touch;
+}
+
+.chips::-webkit-scrollbar{
+  display:none;
+}
+
+.chip{
+  border:1px solid #E8E2D8;
+  background:#fff;
+  color:#504D4A;
+  border-radius:999px;
+  padding:11px 16px;
+  white-space:nowrap;
+  font-size:14px;
+  line-height:1;
+  font-weight:850;
+  min-height:42px;
+  box-shadow:0 6px 16px rgba(80,77,74,.05);
+}
+
+.chip.active{
+  background:#FFCD00;
+  border-color:#FFCD00;
+  color:#504D4A;
+}
+
+.chip-green.active{
+  background:#DDF4E4;
+  border-color:#DDF4E4;
+  color:#23633A;
+}
+
+.chip-yellow.active{
+  background:#FFF3B3;
+  border-color:#FFF3B3;
+  color:#8A6700;
+}
+
+.chip-red.active{
+  background:#FCE3E3;
+  border-color:#FCE3E3;
+  color:#A54545;
+}
     main{
   padding:18px var(--page-x) 120px;
 }
@@ -522,6 +563,63 @@
 .installStepText b{
   font-weight:850;
 }
+    .problemBlock{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:0 10px 26px rgba(80,77,74,.08);
+  padding:18px;
+  margin:0 0 var(--gap-y);
+}
+
+.problemBlock h2{
+  margin:0 0 6px;
+  font-size:21px;
+  line-height:1.1;
+  font-weight:850;
+  letter-spacing:-.03em;
+}
+
+.problemBlock p{
+  margin:0 0 14px;
+  font-size:14px;
+  line-height:1.35;
+  color:#77716B;
+}
+
+.problemGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.problemBtn{
+  border:1px solid #E9E5DC;
+  background:#F9F8F4;
+  color:#504D4A;
+  border-radius:18px;
+  padding:14px 12px;
+  text-align:left;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.problemBtn span{
+  display:block;
+  margin-top:5px;
+  font-size:12px;
+  line-height:1.25;
+  font-weight:600;
+  color:#8A847D;
+}
+
+.problemBtn.active{
+  background:#FFF3B3;
+  border-color:#FFCD00;
+  color:#504D4A;
+}
     @media (max-width:600px){
   main{
   padding:18px var(--page-x) 120px;
@@ -731,24 +829,26 @@
   }
 }
 .collapseBox{
-  margin:var(--gap-y) var(--page-x) 0;
+  margin:18px var(--page-x) 0;
   background:#fff;
-  border:1px solid var(--line);
-  border-radius:22px;
-  box-shadow:0 8px 22px rgba(80,77,74,.06);
+  border:1px solid #E9E5DC;
+  border-radius:24px;
+  box-shadow:0 10px 26px rgba(80,77,74,.06);
   overflow:hidden;
 }
 .collapseHead{
   width:100%;
   border:0;
   background:#fff;
-  color:var(--graphite);
-  padding:18px 20px;
+  color:#504D4A;
+  padding:20px 18px 14px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  font-size:16px;
-  font-weight:850;
+  font-size:18px;
+  line-height:1.1;
+  font-weight:900;
+  letter-spacing:-.02em;
   cursor:pointer;
 }
 .collapseArrow{
@@ -938,7 +1038,36 @@
   </div>
 </div>
   <main>
-    <section id="homePage" class="page active"><div class="collapseBox summaryBox">
+    <section id="homePage" class="page active">
+
+<div class="problemBlock">
+  <h2>Поиск по проблеме</h2>
+  <p>Выберите ситуацию, и приложение покажет подходящие памятки.</p>
+
+  <div class="problemGrid">
+    <button class="problemBtn" data-problem="белье">
+      Нужно заменить белье
+      <span>Постельное или нательное</span>
+    </button>
+
+    <button class="problemBtn" data-problem="жку">
+      Нужно оплатить ЖКУ
+      <span>Квитанции, чек, денежные средства</span>
+    </button>
+
+    <button class="problemBtn" data-problem="продукты">
+      Нужно купить продукты
+      <span>Список, чек, сдача</span>
+    </button>
+
+    <button class="problemBtn" data-problem="">
+      Показать все
+      <span>Сбросить быстрый фильтр</span>
+    </button>
+  </div>
+</div>
+
+<div class="collapseBox summaryBox">
   <button class="collapseHead" type="button" data-collapse>
     <span>Сводка</span>
     <span class="collapseArrow">▶</span>
@@ -1502,8 +1631,14 @@ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{
    document.querySelectorAll(".ruleHead").forEach(head=>head.onclick=()=>{
     head.closest(".ruleSection").classList.toggle("open");
   });
-  document.querySelectorAll("[data-collapse]").forEach(head=>head.onclick=()=>{
+ document.querySelectorAll("[data-collapse]").forEach(head=>head.onclick=()=>{
   head.closest(".collapseBox").classList.toggle("open");
+});
+
+document.querySelectorAll("[data-problem]").forEach(btn=>btn.onclick=()=>{
+  state.search=btn.dataset.problem;
+  document.getElementById("search").value=state.search;
+  render();
 });
 }
 function renderGlossary(){
