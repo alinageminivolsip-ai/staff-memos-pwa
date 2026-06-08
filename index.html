@@ -2105,11 +2105,17 @@ function renderPages(){
   const searchWrap=document.querySelector(".searchWrap");
 
   if(searchWrap){
-    searchWrap.style.display =
-      state.page==="rulesPage" || state.page==="settingsPage"
-        ? "none"
-        : "flex";
-  }
+  const hideSearchPages=[
+    "rulesPage",
+    "settingsPage",
+    "docsPage"
+  ];
+
+  searchWrap.style.display=
+    hideSearchPages.includes(state.page)
+      ? "none"
+      : "flex";
+}
 }
  function render(){
   renderChips();
