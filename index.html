@@ -2142,10 +2142,32 @@ if(problemBlock){
 }
 bindCards();
 }
+let glossarySearchTimer;
+
 document.getElementById("search").addEventListener("input",e=>{
   state.search=e.target.value;
   render();
   filterCurrentPageContent();
+
+  if(state.page==="infoPage"){
+    clearTimeout(glossarySearchTimer);
+
+    glossarySearchTimer=setTimeout(()=>{
+      const q=state.search.toLowerCase().trim();
+
+      if(!q) return;
+
+      const firstFound=[...document.querySelectorAll(".glossaryItem")]
+        .find(item=>item.style.display!=="none");
+
+      if(firstFound){
+        firstFound.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+      }
+    },250);
+  }
 });
 document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
   state.page=btn.dataset.page;
