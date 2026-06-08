@@ -1245,6 +1245,13 @@
   background:#FFCD00;
   border-color:#FFCD00;
 }
+  .categoryGroup{
+  scroll-margin-top:190px;
+}
+
+.memo{
+  scroll-margin-top:190px;
+}
   </style>
 </head>
 <body>
@@ -1993,15 +2000,16 @@ function bindCards(){
   render();
 
   setTimeout(()=>{
-    const firstMemo=document.querySelector("#memoList .memo");
+  const firstMemo=document.querySelector("#memoList .memo");
+  const target=firstMemo ? firstMemo.closest(".categoryGroup") : null;
 
-    if(firstMemo){
-      firstMemo.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
-    }
-  },100);
+  if(target){
+    target.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+  }
+},150);
 });
 
   document.querySelectorAll("[data-letter]").forEach(btn=>btn.onclick=()=>{
