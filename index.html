@@ -2124,7 +2124,7 @@ if(favPageCount){
 renderGlossary();
 renderProgress();
 renderPages();
-   updateSearchPlaceholder();
+updateSearchPlaceholder();
 filterCurrentPageContent();
    const problemBlock=document.querySelector(".problemBlock");
 
@@ -2250,6 +2250,35 @@ function updateSearchPlaceholder(){
 
 function filterCurrentPageContent(){
   const q=state.search.toLowerCase().trim();
+  if(state.page==="infoPage"){
+  const items=document.querySelectorAll(".glossaryItem");
+  let visibleCount=0;
+
+  items.forEach(item=>{
+    const text=item.textContent.toLowerCase();
+    const itemCat=item.dataset.glossaryCat;
+    const itemLetter=item.querySelector("h3")?.textContent.trim();
+
+    const showBySearch=!q || text.includes(q);
+
+    const showByCategory=
+      state.category==="Все" || itemCat===state.category;
+
+    const showByLetter=
+      state.glossaryLetter==="Все" || itemLetter===state.glossaryLetter;
+
+    const show=showBySearch && showByCategory && showByLetter;
+
+    item.style.display=show ? "block" : "none";
+
+    if(show) visibleCount++;
+  });
+
+  const empty=document.getElementById("glossaryEmpty");
+  if(empty){
+    empty.style.display=visibleCount ? "none" : "block";
+  }
+}
 
   if(state.page==="rulesPage" || state.page==="settingsPage"){
     document.querySelectorAll(`#${state.page} .ruleSection`).forEach(item=>{
