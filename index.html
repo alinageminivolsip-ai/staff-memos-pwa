@@ -1808,7 +1808,21 @@ function renderChips(){const el=document.getElementById("chips");el.innerHTML=ca
   data-cat="${c}">
   ${c}
 </button>
-`).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{state.category=btn.dataset.cat;render()})}
+`).join("");el.querySelectorAll(".chip").forEach(btn=>btn.onclick=()=>{
+  state.category=btn.dataset.cat;
+  render();
+
+  setTimeout(()=>{
+    const target=document.querySelector("#memoList .categoryGroup");
+
+    if(target){
+      target.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    }
+  },150);
+});}
   function getChipClass(category){
   switch(category){
     case "Социально-гигиенические":
