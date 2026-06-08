@@ -1985,10 +1985,24 @@ function bindCards(){
   });
 
   document.querySelectorAll("[data-problem]").forEach(btn=>btn.onclick=()=>{
-    state.search=btn.dataset.problem;
-    document.getElementById("search").value=state.search;
-    render();
-  });
+  const problem=btn.dataset.problem;
+
+  state.search=problem;
+  document.getElementById("search").value=problem;
+
+  render();
+
+  setTimeout(()=>{
+    const firstMemo=document.querySelector("#memoList .memo");
+
+    if(firstMemo){
+      firstMemo.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    }
+  },100);
+});
 
   document.querySelectorAll("[data-letter]").forEach(btn=>btn.onclick=()=>{
     state.glossaryLetter=btn.dataset.letter;
