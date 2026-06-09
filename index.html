@@ -2191,9 +2191,11 @@ let glossarySearchTimer;
 let lastScrolledSearch="";
 
 document.getElementById("search").addEventListener("input",e=>{
-  state.search=e.target.value;
-  render();
-  filterCurrentPageContent();
+ state.search=e.target.value;
+state.glossaryLetter="Все";
+lastScrolledSearch="";
+render();
+filterCurrentPageContent();
 
   if(state.page==="infoPage"){
     clearTimeout(glossarySearchTimer);
