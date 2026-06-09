@@ -2377,93 +2377,39 @@ function highlightTypedLetters(item, query){
 }
 function filterCurrentPageContent(){
   const q=state.search.toLowerCase().trim();
+
   if(state.page==="infoPage"){
-    if(state.page==="homePage"){
-  clearTimeout(glossarySearchTimer);
+    const items=document.querySelectorAll(".glossaryItem");
+    let visibleCount=0;
 
-  glossarySearchTimer=setTimeout(()=>{
-
-    const q=state.search.toLowerCase().trim();
-
-    if(!q){
-      return;
-    }
-
-    const firstMemo=document.querySelector(
-      "#memoList .memo"
-    );
-
-    if(firstMemo){
-
-      const categoryGroup=firstMemo.closest(".categoryGroup");
-
-      if(categoryGroup){
-
-        const headerOffset =
-          document.querySelector("header").offsetHeight + 24;
-
-        const elementPosition =
-          categoryGroup.getBoundingClientRect().top +
-          window.pageYOffset;
-
-        const offsetPosition =
-          elementPosition - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior:"smooth"
-        });
+    items.forEach(item=>{
+      if(item.dataset.originalHtml){
+        item.innerHTML=item.dataset.originalHtml;
       }
 
-      const scroller=firstMemo.closest(".memoScroller");
+      const text=item.textContent.toLowerCase();
+      const itemCat=item.dataset.glossaryCat;
+      const itemLetter=item.querySelector("h3")?.textContent.trim();
 
-      if(scroller){
-        scroller.scrollTo({
-          left:firstMemo.scrollIntoView({
-  behavior:"smooth",
-  block:"nearest",
-  inline:"start"
-});
+      const showBySearch=!q || text.includes(q);
+      const showByCategory=state.category==="Все" || itemCat===state.category;
+      const showByLetter=state.glossaryLetter==="Все" || itemLetter===state.glossaryLetter;
+
+      const show=showBySearch && showByCategory && showByLetter;
+
+      item.style.display=show ? "block" : "none";
+
+      if(show){
+        highlightTypedLetters(item,q);
+        visibleCount++;
       }
+    });
+
+    const empty=document.getElementById("glossaryEmpty");
+    if(empty){
+      empty.style.display=visibleCount ? "none" : "block";
     }
-
-  },250);
-}
-  const items=document.querySelectorAll(".glossaryItem");
-  let visibleCount=0;
-
-  items.forEach(item=>{
-  if(item.dataset.originalHtml){
-    item.innerHTML = item.dataset.originalHtml;
   }
-
-  const text=item.textContent.toLowerCase();
-    const itemCat=item.dataset.glossaryCat;
-    const itemLetter=item.querySelector("h3")?.textContent.trim();
-
-    const showBySearch=!q || text.includes(q);
-
-    const showByCategory=
-      state.category==="Все" || itemCat===state.category;
-
-    const showByLetter=
-      state.glossaryLetter==="Все" || itemLetter===state.glossaryLetter;
-
-    const show=showBySearch && showByCategory && showByLetter;
-
-    item.style.display=show ? "block" : "none";
-
-    if(show){
-  highlightTypedLetters(item, q);
-  visibleCount++;
-}
-  });
-
-  const empty=document.getElementById("glossaryEmpty");
-  if(empty){
-    empty.style.display=visibleCount ? "none" : "block";
-  }
-}
 
   if(state.page==="rulesPage" || state.page==="settingsPage"){
     document.querySelectorAll(`#${state.page} .ruleSection`).forEach(item=>{
