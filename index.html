@@ -2378,6 +2378,57 @@ function highlightTypedLetters(item, query){
 function filterCurrentPageContent(){
   const q=state.search.toLowerCase().trim();
   if(state.page==="infoPage"){
+    if(state.page==="homePage"){
+  clearTimeout(glossarySearchTimer);
+
+  glossarySearchTimer=setTimeout(()=>{
+
+    const q=state.search.toLowerCase().trim();
+
+    if(!q){
+      return;
+    }
+
+    const firstMemo=document.querySelector(
+      "#memoList .memo"
+    );
+
+    if(firstMemo){
+
+      const categoryGroup=firstMemo.closest(".categoryGroup");
+
+      if(categoryGroup){
+
+        const headerOffset =
+          document.querySelector("header").offsetHeight + 24;
+
+        const elementPosition =
+          categoryGroup.getBoundingClientRect().top +
+          window.pageYOffset;
+
+        const offsetPosition =
+          elementPosition - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior:"smooth"
+        });
+      }
+
+      const scroller=firstMemo.closest(".memoScroller");
+
+      if(scroller){
+        scroller.scrollTo({
+          left:firstMemo.scrollIntoView({
+  behavior:"smooth",
+  block:"nearest",
+  inline:"start"
+});
+      }
+    }
+
+  },250);
+}
   const items=document.querySelectorAll(".glossaryItem");
   let visibleCount=0;
 
