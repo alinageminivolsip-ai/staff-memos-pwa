@@ -2150,6 +2150,7 @@ if(problemBlock){
 bindCards();
 }
 let glossarySearchTimer;
+let lastScrolledSearch="";
 
 document.getElementById("search").addEventListener("input",e=>{
   state.search=e.target.value;
@@ -2162,16 +2163,25 @@ document.getElementById("search").addEventListener("input",e=>{
     glossarySearchTimer=setTimeout(()=>{
       const q=state.search.toLowerCase().trim();
 
-      if(!q) return;
+     if(!q){
+  lastScrolledSearch="";
+  return;
+}
+
+if(lastScrolledSearch && q.includes(lastScrolledSearch)){
+  return;
+}
 
       const firstFound=[...document.querySelectorAll(".glossaryItem")]
         .find(item=>item.style.display!=="none");
 
       if(firstFound){
-        firstFound.scrollIntoView({
-          behavior:"smooth",
-          block:"start"
-        });
+      firstFound.scrollIntoView({
+  behavior:"smooth",
+  block:"start"
+});
+
+lastScrolledSearch=q;
       }
     },250);
   }
