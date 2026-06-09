@@ -1252,6 +1252,13 @@
 .memo{
   scroll-margin-top:190px;
 }
+    .searchMark{
+  background:#FFCD00;
+  color:#504D4A;
+  border-radius:6px;
+  padding:0 2px;
+  font-weight:900;
+}
   </style>
 </head>
 <body>
@@ -2276,6 +2283,26 @@ function updateSearchPlaceholder(){
   search.placeholder=placeholders[state.page] || "Поиск...";
 }
 
+  function escapeRegExp(text){
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function highlightTypedLetters(item, query){
+  if(!item.dataset.originalHtml){
+    item.dataset.originalHtml = item.innerHTML;
+  }
+
+  item.innerHTML = item.dataset.originalHtml;
+
+  if(!query) return;
+
+  const regex = new RegExp(`(${escapeRegExp(query)})`, "gi");
+
+  item.innerHTML = item.innerHTML.replace(
+    regex,
+    `<mark class="searchMark">$1</mark>`
+  );
+}
 function filterCurrentPageContent(){
   const q=state.search.toLowerCase().trim();
   if(state.page==="infoPage"){
@@ -2283,7 +2310,11 @@ function filterCurrentPageContent(){
   let visibleCount=0;
 
   items.forEach(item=>{
-    const text=item.textContent.toLowerCase();
+  if(item.dataset.originalHtml){
+    item.innerHTML = item.dataset.originalHtml;
+  }
+
+  const text=item.textContent.toLowerCase();
     const itemCat=item.dataset.glossaryCat;
     const itemLetter=item.querySelector("h3")?.textContent.trim();
 
@@ -2299,7 +2330,10 @@ function filterCurrentPageContent(){
 
     item.style.display=show ? "block" : "none";
 
-    if(show) visibleCount++;
+    if(show){
+  highlightTypedLetters(item, q);
+  visibleCount++;
+}
   });
 
   const empty=document.getElementById("glossaryEmpty");
