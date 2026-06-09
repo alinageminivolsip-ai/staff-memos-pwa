@@ -2188,9 +2188,13 @@ if(lastScrolledSearch && q.includes(lastScrolledSearch)){
         .find(item=>item.style.display!=="none");
 
       if(firstFound){
-      firstFound.scrollIntoView({
-  behavior:"smooth",
-  block:"start"
+    const headerOffset = document.querySelector("header").offsetHeight + 24;
+const elementPosition = firstFound.getBoundingClientRect().top + window.pageYOffset;
+const offsetPosition = elementPosition - headerOffset;
+
+window.scrollTo({
+  top: offsetPosition,
+  behavior: "smooth"
 });
 
 lastScrolledSearch=q;
