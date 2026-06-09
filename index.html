@@ -2187,66 +2187,94 @@ if(problemBlock){
 }
 bindCards();
 }
-let glossarySearchTimer;
+let searchScrollTimer;
 let lastScrolledSearch="";
 
 document.getElementById("search").addEventListener("input",e=>{
- state.search=e.target.value;
-state.glossaryLetter="Все";
-lastScrolledSearch="";
-render();
-filterCurrentPageContent();
+
+  state.search=e.target.value;
 
   if(state.page==="infoPage"){
-    clearTimeout(glossarySearchTimer);
-
-    glossarySearchTimer=setTimeout(()=>{
-      const q=state.search.toLowerCase().trim();
-
-     if(!q){
-  lastScrolledSearch="";
-  return;
-}
-
-if(lastScrolledSearch && q.startsWith(lastScrolledSearch)){
-  return;
-}
-
-const firstFound=[...document.querySelectorAll(".glossaryItem")]
-  .find(item=>item.style.display!=="none");
-
-if(firstFound){
-  const foundLetter=firstFound.querySelector("h3")?.textContent.trim();
-
-  if(foundLetter){
-    state.glossaryLetter=foundLetter;
-
-    document.querySelectorAll(".letterBtn").forEach(btn=>{
-      btn.classList.toggle("active",btn.dataset.letter===foundLetter);
-    });
-
-    const activeLetter=document.querySelector(`.letterBtn[data-letter="${foundLetter}"]`);
-    if(activeLetter){
-      activeLetter.scrollIntoView({
-        behavior:"smooth",
-        inline:"center",
-        block:"nearest"
-      });
-    }
+    state.glossaryLetter="Все";
+    lastScrolledSearch="";
   }
-    const headerOffset = document.querySelector("header").offsetHeight + 24;
-const elementPosition = firstFound.getBoundingClientRect().top + window.pageYOffset;
-const offsetPosition = elementPosition - headerOffset;
 
-window.scrollTo({
-  top: offsetPosition,
-  behavior: "smooth"
-});
+  render();
+  filterCurrentPageContent();
 
-lastScrolledSearch=q;
+  clearTimeout(searchScrollTimer);
+
+  searchScrollTimer=setTimeout(()=>{
+
+    const q=state.search.toLowerCase().trim();
+
+    if(!q) return;
+
+    if(state.page==="homePage"){
+
+      const firstMemo=document.querySelector("#memoList .memo");
+
+      if(firstMemo){
+
+        const group=firstMemo.closest(".categoryGroup");
+
+        if(group){
+          group.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+          });
+        }
+
+        firstMemo.scrollIntoView({
+          behavior:"smooth",
+          block:"nearest",
+          inline:"start"
+        });
       }
-    },250);
-  }
+    }
+
+    if(state.page==="infoPage"){
+
+      const firstFound=[...document.querySelectorAll(".glossaryItem")]
+        .find(item=>item.style.display!=="none");
+
+      if(firstFound){
+
+        const foundLetter=firstFound.querySelector("h3")?.textContent.trim();
+
+        if(foundLetter){
+
+          state.glossaryLetter=foundLetter;
+
+          document.querySelectorAll(".letterBtn").forEach(btn=>{
+            btn.classList.toggle(
+              "active",
+              btn.dataset.letter===foundLetter
+            );
+          });
+
+          const activeLetter=document.querySelector(
+            `.letterBtn[data-letter="${foundLetter}"]`
+          );
+
+          if(activeLetter){
+            activeLetter.scrollIntoView({
+              behavior:"smooth",
+              inline:"center",
+              block:"nearest"
+            });
+          }
+        }
+
+        firstFound.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+      }
+    }
+
+  },250);
+
 });
 document.querySelectorAll(".navBtn").forEach(btn=>btn.onclick=()=>{
   state.page=btn.dataset.page;
