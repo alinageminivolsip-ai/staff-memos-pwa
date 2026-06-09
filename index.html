@@ -2210,10 +2210,28 @@ if(lastScrolledSearch && q.startsWith(lastScrolledSearch)){
   return;
 }
 
-      const firstFound=[...document.querySelectorAll(".glossaryItem")]
-        .find(item=>item.style.display!=="none");
+const firstFound=[...document.querySelectorAll(".glossaryItem")]
+  .find(item=>item.style.display!=="none");
 
-      if(firstFound){
+if(firstFound){
+  const foundLetter=firstFound.querySelector("h3")?.textContent.trim();
+
+  if(foundLetter){
+    state.glossaryLetter=foundLetter;
+
+    document.querySelectorAll(".letterBtn").forEach(btn=>{
+      btn.classList.toggle("active",btn.dataset.letter===foundLetter);
+    });
+
+    const activeLetter=document.querySelector(`.letterBtn[data-letter="${foundLetter}"]`);
+    if(activeLetter){
+      activeLetter.scrollIntoView({
+        behavior:"smooth",
+        inline:"center",
+        block:"nearest"
+      });
+    }
+  }
     const headerOffset = document.querySelector("header").offsetHeight + 24;
 const elementPosition = firstFound.getBoundingClientRect().top + window.pageYOffset;
 const offsetPosition = elementPosition - headerOffset;
